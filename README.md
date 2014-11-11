@@ -1,4 +1,0 @@
-Projectwolfram
-==============
-
-Project for PSIT
