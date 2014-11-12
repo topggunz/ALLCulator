@@ -57,7 +57,7 @@ class mainWindow(Frame):
     def cb_sol(self):
         print "variable4 is", self.var_sol.get()
     def cb_int_sol(self):
-        print "variable5 is", var_int_sol.get()
+        print "variable5 is", self.var_int_sol.get()
 
 def submit():
     print 'Submit'
