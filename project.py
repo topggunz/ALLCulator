@@ -22,8 +22,8 @@ class mainWindow(Frame):
         self.pack()
         
         #bymimimimi
-        frame_input = LabelFrame(root, text='Enter what you want to calculate                                                 ', padx=5, pady=2)
-        label_frame_input = Entry(frame_input)
+        frame_input = LabelFrame(root, text='Enter what you want to calculate', padx=5, pady=2)
+        label_frame_input = Entry(frame_input, width=100)
         frame_input.pack(padx=10, pady=10, anchor=NW)
         label_frame_input.pack(fill=BOTH, anchor=NW)
         
