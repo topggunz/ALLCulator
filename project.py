@@ -27,10 +27,17 @@ class mainWindow(Frame):
         
         ####bymimimimi###
 
+        #label for username
+        self.username_input = StringVar()
+        self.frame_username = LabelFrame(root, text='USER NAME', padx=5, pady=2)        
+        self.label_username_input = Entry(self.frame_username, width=40, textvariable = self.username_input)
+        self.frame_username.pack(padx=10, pady=10, anchor=NW)
+        self.label_username_input.pack(fill=BOTH, anchor=NW)
+
         #label for input
         self.text_input = StringVar()
         self.frame_input = LabelFrame(root, text='Enter what you want to calculate', padx=5, pady=2)        
-        self.label_frame_input = Entry(self.frame_input, width=100, textvariable = self.text_input)
+        self.label_frame_input = Entry(self.frame_input, width=80, textvariable = self.text_input)
         self.frame_input.pack(padx=10, pady=10, anchor=NW)
         self.label_frame_input.pack(fill=BOTH, anchor=NW)
         
@@ -79,8 +86,10 @@ class mainWindow(Frame):
 
     def submit(self):
         '''get input'''
-        input = self.text_input.get()
-        print input
+        self.username = self.username_input.get()
+        print 'username', self.username
+        self.text_input = self.text_input.get()
+        print 'equation', self.text_input
 
     
 
