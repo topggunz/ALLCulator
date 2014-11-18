@@ -86,10 +86,10 @@ class mainWindow(Frame):
 
     def submit(self):
         '''get input'''
-        self.username = self.username_input.get()
-        print 'username', self.username
-        self.text_input = self.text_input.get()
-        print 'equation', self.text_input
+        input = self.username_input.get()
+        print 'username', input
+        input = self.text_input.get()
+        print 'equation', input
 
     
 
