@@ -1,7 +1,7 @@
 """Project PSIT Startup at 11/11/2557
 Author : Nathawut Worakijlawan 
 """
-from Tkinter import *
+from tkinter import *
 
 class mainWindow(Frame):
     def __init__(self, master):
@@ -20,7 +20,7 @@ class mainWindow(Frame):
         
         self.master.config(menu=self.menubar)
         self.pack()
-        #bymimimimi
+        
 root = Tk()
 windows = mainWindow(root)
 root.mainloop()
