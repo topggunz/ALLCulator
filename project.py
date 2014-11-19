@@ -3,13 +3,13 @@ Author :    Nathawut Worakijlawan
             Amita Mongkhonpreedarchai
 """
 from Tkinter import *
-
+import wap
 class mainWindow(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
 
         #menu bar
-        self.master.title("MathPro Alpha Version (build 00011) **Name non official**")
+        self.master.title("All Math (Alltimate Math)")
         self.master.geometry("840x550")
         self.menubar = Menu(self, tearoff=False)
         self.optionmenu = Menu(self.menubar, tearoff=0)
@@ -20,7 +20,7 @@ class mainWindow(Frame):
         self.helpmenu.add_command(label="About", command=popup_about)
         
         self.menubar.add_cascade(menu=self.filemenu, label="File")
-        self.menubar.add_cascade(menu=self.optionmenu, label="Options")
+        #self.menubar.add_cascade(menu=self.optionmenu, label="Options")
         self.menubar.add_cascade(menu=self.helpmenu, label="Help")
         self.master.config(menu=self.menubar)
         self.pack()
@@ -90,6 +90,32 @@ class mainWindow(Frame):
         print 'username', input
         input = self.text_input.get()
         print 'equation', input
+        '''api connect'''
+        server = 'http://api.wolframalpha.com/v2/query.jsp'
+        appid = '6LA36U-7V45PGUA6E'
+        input = self.text_input.get()
+
+        waeo = wap.WolframAlphaEngine(appid, server)
+
+        queryStr = waeo.CreateQuery(input)
+        wap.WolframAlphaQuery(queryStr, appid)
+        result = waeo.PerformQuery(queryStr)
+        result = wap.WolframAlphaQueryResult(result)
+
+        for pod in result.Pods():
+                waPod = wap.Pod(pod)
+                title = "Pod.title: " + waPod.Title()[0]
+                print title
+                for subpod in waPod.Subpods():
+                        waSubpod = wap.Subpod(subpod)
+                        plaintext = waSubpod.Plaintext()[0]
+                        img = waSubpod.Img()
+                        src = wap.scanbranches(img[0], 'src')[0]
+                        alt = wap.scanbranches(img[0], 'alt')[0]
+                        print "-------------"
+                        print "img.src: " + src
+                        print "img.alt: " + alt
+                print "\n"
 
     
 
@@ -115,7 +141,38 @@ def popup_about():
     msg.pack()
 
     button = Button(top, text="Close", command=top.destroy)
-    button.pack()  
+    button.pack()
+
+  
+def api_connect():
+    import wap  
+    server = 'http://api.wolframalpha.com/v2/query.jsp'
+    appid = '6LA36U-7V45PGUA6E'
+    input = self.text_input.get()
+
+    waeo = wap.WolframAlphaEngine(appid, server)
+
+    queryStr = waeo.CreateQuery(input)
+    wap.WolframAlphaQuery(queryStr, appid)
+    result = waeo.PerformQuery(queryStr)
+    result = wap.WolframAlphaQueryResult(result)
+
+    for pod in result.Pods():
+            waPod = wap.Pod(pod)
+            title = "Pod.title: " + waPod.Title()[0]
+            print title
+            for subpod in waPod.Subpods():
+                    waSubpod = wap.Subpod(subpod)
+                    plaintext = waSubpod.Plaintext()[0]
+                    img = waSubpod.Img()
+                    src = wap.scanbranches(img[0], 'src')[0]
+                    alt = wap.scanbranches(img[0], 'alt')[0]
+                    print "-------------"
+                    print "img.src: " + src
+                    print "img.alt: " + alt
+            print "\n"
+
+    
     
         
 
