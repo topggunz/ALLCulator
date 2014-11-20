@@ -118,7 +118,7 @@ class mainWindow(Frame):
                         print "img.alt: " + alt
                 print "\n"
 
-
+#eiei
 
 def reset():
     '''for reset button'''
