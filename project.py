@@ -20,7 +20,7 @@ class mainWindow(Frame):
         self.helpmenu.add_command(label="About", command=popup_about)
         
         self.menubar.add_cascade(menu=self.filemenu, label="File")
-        #self.menubar.add_cascade(menu=self.optionmenu, label="Options")
+        self.menubar.add_cascade(menu=self.optionmenu, label="Options")
         self.menubar.add_cascade(menu=self.helpmenu, label="Help")
         self.master.config(menu=self.menubar)
         self.pack()
