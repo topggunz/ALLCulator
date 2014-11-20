@@ -90,6 +90,7 @@ class mainWindow(Frame):
         print 'username', input
         input = self.text_input.get()
         print 'equation', input
+
         '''api connect'''
         server = 'http://api.wolframalpha.com/v2/query.jsp'
         appid = '6LA36U-7V45PGUA6E'
@@ -116,6 +117,7 @@ class mainWindow(Frame):
                         print "img.src: " + src
                         print "img.alt: " + alt
                 print "\n"
+
 
 
 def reset():
