@@ -6,6 +6,7 @@ from Tkinter import *
 import urllib2
 import wap
 import tkMessageBox
+import ttk
 class mainWindow(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
@@ -31,21 +32,22 @@ class mainWindow(Frame):
 
         #label for username
         self.username_input = StringVar()
-        self.frame_username = LabelFrame(master, text='USER NAME', padx=7, pady=5)
+        #padshp_lb=ttk.Labelframe(fr,text="Pad Shape",padding=2)
+        self.frame_username = ttk.LabelFrame(master, text='USER NAME',padding=5)
         self.frame_username.pack(padx=10, pady=10)      
-        self.label_username_input = Entry(self.frame_username, width=40, textvariable = self.username_input)
+        self.label_username_input = Entry(self.frame_username, width=20, textvariable = self.username_input)
         self.label_username_input.pack()
 
         #label for input
         self.text_input = StringVar()
-        self.frame_input = LabelFrame(master, text='Enter what you want to calculate', padx=7, pady=5)        
-        self.frame_input.pack(padx=10, pady=20)
-        self.label_frame_input = Entry(self.frame_input, width=80, textvariable = self.text_input)
+        self.frame_input = ttk.LabelFrame(master, text='Enter what you want to calculate', padding=5)        
+        self.frame_input.pack(padx=10, pady=10)
+        self.label_frame_input = Entry(self.frame_input, width=79, textvariable = self.text_input)
         self.label_frame_input.pack()
         
         #checkbutton for output
-        self.option_frame = Frame(master, height=2, bd=1, relief=SUNKEN)
-        self.option_frame.pack(padx=5, pady=5)
+        self.option_frame = ttk.Labelframe(master, text='Select Output', padding=5)
+        self.option_frame.pack(padx=5, pady=10)
 
         self.var_in = IntVar()
         self.var_graph = IntVar()
@@ -71,7 +73,13 @@ class mainWindow(Frame):
         self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
         self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
 
-
+        #combobox test
+        Label(master,text="Package:").pack(padx=2,pady=2)
+        package=StringVar()
+        pack=ttk.Combobox(master,width=10,state="readonly",values=['SIP','DIP','CONN-Dual','QUAD'],textvariable=package)
+        pack.current(0)
+        pack.pack()
+        #pack.bind("<<ComboboxSelected>>",package_cmb_update)
     
     #function with check button for output 
     #return 1 when check
@@ -101,7 +109,7 @@ class mainWindow(Frame):
         connect = mainConnect.cal_api(self.text_input.get())
 
 class Connect(object):
-    """docstring for Connect"""
+    """Connecting the API libary"""
     def __init__(self):
         try:
             self.server = urllib2.urlopen('http://www.google.com')
