@@ -3,7 +3,9 @@ Author :    Nathawut Worakijlawan
             Amita Mongkhonpreedarchai
 """
 from Tkinter import *
+import urllib2
 import wap
+import tkMessageBox
 class mainWindow(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
@@ -29,15 +31,15 @@ class mainWindow(Frame):
 
         #label for username
         self.username_input = StringVar()
-        self.frame_username = LabelFrame(master, text='USER NAME', padx=5, pady=2)
+        self.frame_username = LabelFrame(master, text='USER NAME', padx=7, pady=5)
         self.frame_username.pack(padx=10, pady=10)      
         self.label_username_input = Entry(self.frame_username, width=40, textvariable = self.username_input)
         self.label_username_input.pack()
 
         #label for input
         self.text_input = StringVar()
-        self.frame_input = LabelFrame(master, text='Enter what you want to calculate', padx=5, pady=2)        
-        self.frame_input.pack(padx=10, pady=10)
+        self.frame_input = LabelFrame(master, text='Enter what you want to calculate', padx=7, pady=5)        
+        self.frame_input.pack(padx=10, pady=20)
         self.label_frame_input = Entry(self.frame_input, width=80, textvariable = self.text_input)
         self.label_frame_input.pack()
         
@@ -91,19 +93,28 @@ class mainWindow(Frame):
 
     def submit(self):
         '''get input'''
+        
         input = self.username_input.get()
         print 'username', input
         input = self.text_input.get()
         print 'equation', input
+        connect = mainConnect.cal_api(self.text_input.get())
 
-        '''api connect'''
+       
+class Connect(object):
+    """docstring for Connect"""
+    def __init__(self):
+        try:
+            self.server = urllib2.urlopen('http://www.google.com')
+            print 'Hello'
+        except:
+            self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
+    def cal_api(self, val):
         server = 'http://api.wolframalpha.com/v2/query.jsp'
         appid = '6LA36U-7V45PGUA6E'
-        input = self.text_input.get()
-
+        input = val
         waeo = wap.WolframAlphaEngine(appid, server)
-
-        queryStr = waeo.CreateQuery(input)
+        queryStr = waeo.CreateQuery(val)
         wap.WolframAlphaQuery(queryStr, appid)
         result = waeo.PerformQuery(queryStr)
         result = wap.WolframAlphaQueryResult(result)
@@ -122,8 +133,6 @@ class mainWindow(Frame):
                         print "img.src: " + src
                         print "img.alt: " + alt
                 print "\n"
-
-#eiei
 
 def reset():
     '''for reset button'''
@@ -150,4 +159,5 @@ def popup_about():
 
 root = Tk()
 windows = mainWindow(root)
+mainConnect = Connect()
 root.mainloop()
