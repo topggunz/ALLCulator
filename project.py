@@ -71,36 +71,6 @@ class mainWindow(Frame):
         self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
         self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
 
-    
-    #function with check button for output 
-    #return 1 when check
-    #return 0 when don't check
-    def cb_input(self):
-        print "variable1 is", self.var_in.get()
-
-    def cb_graph(self):
-        print "variable2 is", self.var_graph.get()
-
-    def cb_equa(self):
-        print "variable3 is", self.var_equa.get()
-
-    def cb_sol(self):
-        print "variable4 is", self.var_sol.get()
-
-    def cb_int_sol(self):
-        print "variable5 is", self.var_int_sol.get()
-
-
-    def submit(self):
-        '''get input'''
-        
-        input = self.username_input.get()
-        print 'username', input
-        input = self.text_input.get()
-        print 'equation', input
-        connect = mainConnect.cal_api(self.text_input.get())
-
-       
 class Connect(object):
     """docstring for Connect"""
     def __init__(self):
@@ -133,6 +103,34 @@ class Connect(object):
                         print "img.src: " + src
                         print "img.alt: " + alt
                 print "\n"
+
+    
+    #function with check button for output 
+    #return 1 when check
+    #return 0 when don't check
+    def cb_input(self):
+        print "variable1 is", self.var_in.get()
+
+    def cb_graph(self):
+        print "variable2 is", self.var_graph.get()
+
+    def cb_equa(self):
+        print "variable3 is", self.var_equa.get()
+
+    def cb_sol(self):
+        print "variable4 is", self.var_sol.get()
+
+    def cb_int_sol(self):
+        print "variable5 is", self.var_int_sol.get()
+
+
+    def submit(self):
+        '''get input'''
+        input = self.username_input.get()
+        print 'username', input
+        input = self.text_input.get()
+        print 'equation', input
+
 
 def reset():
     '''for reset button'''
