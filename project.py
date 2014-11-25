@@ -98,6 +98,7 @@ class mainWindow(Frame):
         print 'username', input
         input = self.text_input.get()
         print 'equation', input
+        connect = mainConnect.cal_api(self.text_input.get())
 
 class Connect(object):
     """docstring for Connect"""
