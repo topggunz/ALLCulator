@@ -1,7 +1,6 @@
 """Project PSIT Startup at 11/11/2557
 Author :    Nathawut Worakijlawan 
             Amita Mongkhonpreedarchai
-            eiei
 """
 from Tkinter import *
 import wap
@@ -30,40 +29,45 @@ class mainWindow(Frame):
 
         #label for username
         self.username_input = StringVar()
-        self.frame_username = LabelFrame(root, text='USER NAME', padx=5, pady=2)        
+        self.frame_username = LabelFrame(master, text='USER NAME', padx=5, pady=2)
+        self.frame_username.pack(padx=10, pady=10)      
         self.label_username_input = Entry(self.frame_username, width=40, textvariable = self.username_input)
-        self.frame_username.pack(padx=10, pady=10, anchor=NW)
-        self.label_username_input.pack(fill=BOTH, anchor=NW)
+        self.label_username_input.pack()
 
         #label for input
         self.text_input = StringVar()
-        self.frame_input = LabelFrame(root, text='Enter what you want to calculate', padx=5, pady=2)        
+        self.frame_input = LabelFrame(master, text='Enter what you want to calculate', padx=5, pady=2)        
+        self.frame_input.pack(padx=10, pady=10)
         self.label_frame_input = Entry(self.frame_input, width=80, textvariable = self.text_input)
-        self.frame_input.pack(padx=10, pady=10, anchor=NW)
-        self.label_frame_input.pack(fill=BOTH, anchor=NW)
+        self.label_frame_input.pack()
         
         #checkbutton for output
+        self.option_frame = Frame(master, height=2, bd=1, relief=SUNKEN)
+        self.option_frame.pack(padx=5, pady=5)
+
         self.var_in = IntVar()
         self.var_graph = IntVar()
         self.var_equa = IntVar()
         self.var_sol = IntVar()
         self.var_int_sol = IntVar()
 
-        self.chck_input = Checkbutton(master, text="Input", variable=self.var_in, command=self.cb_input)
-        self.chck_input.pack(anchor=NW)
-        self.chck_graph = Checkbutton(master, text="Graph", variable=self.var_graph, command=self.cb_graph)
-        self.chck_graph.pack(anchor=NW)
-        self.chck_equa = Checkbutton(master, text="Equation", variable=self.var_equa, command=self.cb_equa)
-        self.chck_equa.pack(anchor=NW)
-        self.chck_sol = Checkbutton(master, text="Solution", variable=self.var_sol, command=self.cb_sol)
-        self.chck_sol.pack(anchor=NW)
-        self.chck_int_sol = Checkbutton(master, text="Integer Solution", variable=self.var_int_sol, command=self.cb_int_sol)
-        self.chck_int_sol.pack(anchor=NW)
+        self.chck_input = Checkbutton(self.option_frame, text="Input", variable=self.var_in, command=self.cb_input)
+        self.chck_input.pack(side=LEFT, padx=10)
+        self.chck_graph = Checkbutton(self.option_frame, text="Graph", variable=self.var_graph, command=self.cb_graph)
+        self.chck_graph.pack(side=LEFT, padx=10)
+        self.chck_equa = Checkbutton(self.option_frame, text="Equation", variable=self.var_equa, command=self.cb_equa)
+        self.chck_equa.pack(side=LEFT, padx=10)
+        self.chck_sol = Checkbutton(self.option_frame, text="Solution", variable=self.var_sol, command=self.cb_sol)
+        self.chck_sol.pack(side=LEFT, padx=10)
+        self.chck_int_sol = Checkbutton(self.option_frame, text="Integer Solution", variable=self.var_int_sol, command=self.cb_int_sol)
+        self.chck_int_sol.pack(side=LEFT, padx=10)
 
         
         #button
-        self.b_submit = Button(master, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
-        self.b_reset = Button(master, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
+        self.button_frame = Frame(master, height=2, bd=1, relief=SUNKEN)
+        self.button_frame.pack(padx=5, pady=5)
+        self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
+        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
 
     
     #function with check button for output 
