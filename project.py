@@ -35,7 +35,6 @@ class mainWindow(Frame):
 
         #label for username
         self.username_input = StringVar()
-        #padshp_lb=ttk.Labelframe(fr,text="Pad Shape",padding=2)
         self.frame_username = ttk.LabelFrame(master, text='USER NAME',padding=5)
         self.frame_username.pack(padx=10, pady=10)      
         self.label_username_input = Entry(self.frame_username, width=20, textvariable = self.username_input)
@@ -46,7 +45,6 @@ class mainWindow(Frame):
         self.frame_input = ttk.LabelFrame(master, text='Enter what you want to calculate', padding=5)        
         self.frame_input.pack(padx=10, pady=10)
         self.label_frame_input = Entry(self.frame_input, width=79, textvariable = self.text_input)
-        self.label_frame_input.pack()
         
         #checkbutton for output
         self.option_frame = ttk.Labelframe(master, text='Select Output', padding=5)
@@ -76,6 +74,7 @@ class mainWindow(Frame):
         self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
         self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
 
+#<<<<<<< HEAD
         #####combobox test
         # Label(master,text="Package:").pack(padx=2,pady=2)
         # package=StringVar()
@@ -97,6 +96,10 @@ class mainWindow(Frame):
         label.pack(padx=10, pady=20)
 
 
+#=======
+
+    
+#>>>>>>> origin/master
     #function with check button for output 
     #return 1 when check
     #return 0 when don't check
