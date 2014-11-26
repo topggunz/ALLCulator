@@ -63,22 +63,36 @@ class mainWindow(Frame):
         #self.option_frame.grid(row=2, column=0,)
         self.option_frame.pack(padx=5, pady=5)
 
-        self.var_in = IntVar()
-        self.var_graph = IntVar()
-        self.var_equa = IntVar()
-        self.var_sol = IntVar()
-        self.var_int_sol = IntVar()
+        self.output_tp = [
+        ("Input", "Input"),
+        ("Graph", "Grap"),
+        ("Equation", "Equ"),
+        ("Solution", "Sol"),
+        ("Integer Solution", "IS")   ]
 
-        self.chck_input = Checkbutton(self.option_frame, text="Input", variable=self.var_in, command=self.cb_input)
-        self.chck_input.pack(padx=10)
-        self.chck_graph = Checkbutton(self.option_frame, text="Graph", variable=self.var_graph, command=self.cb_graph)
-        self.chck_graph.pack(padx=10)
-        self.chck_equa = Checkbutton(self.option_frame, text="Equation", variable=self.var_equa, command=self.cb_equa)
-        self.chck_equa.pack(padx=10)
-        self.chck_sol = Checkbutton(self.option_frame, text="Solution", variable=self.var_sol, command=self.cb_sol)
-        self.chck_sol.pack(padx=10)
-        self.chck_int_sol = Checkbutton(self.option_frame, text="Integer Solution", variable=self.var_int_sol, command=self.cb_int_sol)
-        self.chck_int_sol.pack(padx=10)
+        self.v = StringVar()
+        #self.v.set("") # initialize
+
+        for text, mode in self.output_tp:
+            self.b = Radiobutton(self.option_frame, text=text, variable=self.v, value=mode, command=self.cb_var)
+            self.b.pack(anchor=W)
+
+        # self.var_in = IntVar()
+        # self.var_graph = IntVar()
+        # self.var_equa = IntVar()
+        # self.var_sol = IntVar()
+        # self.var_int_sol = IntVar()
+
+        # self.chck_input = Radiobutton(self.option_frame, text="Input", variable=self.var_in, command=self.cb_input)
+        # self.chck_input.pack(padx=10)
+        # self.chck_graph = Radiobutton(self.option_frame, text="Graph", variable=self.var_graph, command=self.cb_graph)
+        # self.chck_graph.pack(padx=10)
+        # self.chck_equa = Radiobutton(self.option_frame, text="Equation", variable=self.var_equa, command=self.cb_equa)
+        # self.chck_equa.pack(padx=10)
+        # self.chck_sol = Radiobutton(self.option_frame, text="Solution", variable=self.var_sol, command=self.cb_sol)
+        # self.chck_sol.pack(padx=10)
+        # self.chck_int_sol = Radiobutton(self.option_frame, text="Integer Solution", variable=self.var_int_sol, command=self.cb_int_sol)
+        # self.chck_int_sol.pack(padx=10)
 
         # self.chck_input = Checkbutton(self.option_frame, text="Input", variable=self.var_in, command=self.cb_input)
         # self.chck_input.grid(row=2, column=0, padx=10)
@@ -136,6 +150,9 @@ class mainWindow(Frame):
 
     def cb_int_sol(self):
         print "variable5 is", self.var_int_sol.get()
+
+    def cb_var(self):
+        print 'variable', self.v.get()
 
 
     def submit(self):
