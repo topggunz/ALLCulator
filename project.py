@@ -36,20 +36,23 @@ class mainWindow(Frame):
         #label for username
         self.username_input = StringVar()
         self.frame_username = ttk.LabelFrame(master, text='USER NAME',padding=5)
-        self.frame_username.pack(padx=10, pady=10)      
+        self.frame_username.grid(row=0, column=0,padx=10, pady=10)      
         self.label_username_input = Entry(self.frame_username, width=20, textvariable = self.username_input)
-        self.label_username_input.pack()
+        self.label_username_input.grid(row=0, column=0)
+        #self.label_username_input.pack()
 
         #label for input
         self.text_input = StringVar()
         self.frame_input = ttk.LabelFrame(master, text='Enter what you want to calculate', padding=5)        
-        self.frame_input.pack(padx=10, pady=10)
+        self.frame_input.grid(row=1, column=0, padx=10, pady=10)
         self.label_frame_input = Entry(self.frame_input, width=79, textvariable = self.text_input)
-        self.label_frame_input.pack()
+        self.label_frame_input.grid(row=1, column=0)
+        #self.label_frame_input.pack()
         
         #checkbutton for output
         self.option_frame = ttk.Labelframe(master, text='Select Output', padding=5)
-        self.option_frame.pack(padx=5, pady=10)
+        self.option_frame.grid(row=2, column=0,)
+        #self.option_frame.pack(padx=5, pady=5)
 
         self.var_in = IntVar()
         self.var_graph = IntVar()
@@ -58,20 +61,20 @@ class mainWindow(Frame):
         self.var_int_sol = IntVar()
 
         self.chck_input = Checkbutton(self.option_frame, text="Input", variable=self.var_in, command=self.cb_input)
-        self.chck_input.pack(side=LEFT, padx=10)
+        self.chck_input.grid(row=2, column=0, padx=10)
         self.chck_graph = Checkbutton(self.option_frame, text="Graph", variable=self.var_graph, command=self.cb_graph)
-        self.chck_graph.pack(side=LEFT, padx=10)
+        self.chck_graph.grid(row=2, column=0, padx=10)
         self.chck_equa = Checkbutton(self.option_frame, text="Equation", variable=self.var_equa, command=self.cb_equa)
-        self.chck_equa.pack(side=LEFT, padx=10)
+        self.chck_equa.grid(row=2, column=0, padx=10)
         self.chck_sol = Checkbutton(self.option_frame, text="Solution", variable=self.var_sol, command=self.cb_sol)
-        self.chck_sol.pack(side=LEFT, padx=10)
+        self.chck_sol.grid(row=2, column=0, padx=10)
         self.chck_int_sol = Checkbutton(self.option_frame, text="Integer Solution", variable=self.var_int_sol, command=self.cb_int_sol)
-        self.chck_int_sol.pack(side=LEFT, padx=10)
+        self.chck_int_sol.grid(row=2, column=0, padx=10)
 
         
         #button
         self.button_frame = Frame(master, height=2, bd=1, relief=SUNKEN)
-        self.button_frame.pack(padx=5, pady=5)
+        self.button_frame.grid(row=3, column=0, padx=5, pady=5)
         self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
         self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
 
@@ -94,7 +97,7 @@ class mainWindow(Frame):
         pil_image = Image.open(data_stream)
         tk_image = ImageTk.PhotoImage(pil_image)
         label = Label(root, image=tk_image, bg='brown')
-        label.pack(padx=10, pady=20)
+        #label.grid(row=0, column=1)#(padx=10, pady=20)
 
 
 #=======
