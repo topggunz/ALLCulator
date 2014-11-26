@@ -3,6 +3,9 @@ Author :    Nathawut Worakijlawan
             Amita Mongkhonpreedarchai
 """
 from Tkinter import *
+import io
+from PIL import Image, ImageTk
+from urllib2 import urlopen
 import urllib2
 import wap
 import tkMessageBox
@@ -73,14 +76,27 @@ class mainWindow(Frame):
         self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
         self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
 
-        #combobox test
-        Label(master,text="Package:").pack(padx=2,pady=2)
-        package=StringVar()
-        pack=ttk.Combobox(master,width=10,state="readonly",values=['SIP','DIP','CONN-Dual','QUAD'],textvariable=package)
-        pack.current(0)
-        pack.pack()
-        #pack.bind("<<ComboboxSelected>>",package_cmb_update)
-    
+        #####combobox test
+        # Label(master,text="Package:").pack(padx=2,pady=2)
+        # package=StringVar()
+        # pack=ttk.Combobox(master,width=10,state="readonly",values=['SIP','DIP','CONN-Dual','QUAD'],textvariable=package)
+        # pack.current(0)
+        # pack.pack()
+
+        #To Generate the Content for the Picture Frame
+        #canvas = Canvas(master,width=200,height=200,background="white" ,image=tk_image)
+        #canvas.pack(fill=BOTH)
+
+        image_bytes = urllib2.urlopen(
+            "http://mlm-s2-p.mlstatic.com/disfraz-minnie-mouse-mimi-c-orejas-original-disney-store-11007-MLM20038007407_012014-F.jpg"
+            ).read()
+        data_stream = io.BytesIO(image_bytes)
+        pil_image = Image.open(data_stream)
+        tk_image = ImageTk.PhotoImage(pil_image)
+        label = Label(root, image=tk_image, bg='brown')
+        label.pack(padx=10, pady=20)
+
+
     #function with check button for output 
     #return 1 when check
     #return 0 when don't check
