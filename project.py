@@ -87,7 +87,7 @@ class mainWindow(Frame):
         #canvas.pack(fill=BOTH)
 
         image_bytes = urllib2.urlopen(
-            "http://mlm-s2-p.mlstatic.com/disfraz-minnie-mouse-mimi-c-orejas-original-disney-store-11007-MLM20038007407_012014-F.jpg"
+            "http://www.cuisinetoo.com/ill/brownies.jpg"
             ).read()
         data_stream = io.BytesIO(image_bytes)
         pil_image = Image.open(data_stream)
