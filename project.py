@@ -3,13 +3,20 @@ Author :    Nathawut Worakijlawan
             Amita Mongkhonpreedarchai
 """
 from Tkinter import *
-import io
-from PIL import Image, ImageTk
 from urllib2 import urlopen
 import urllib2
 import wap
 import tkMessageBox
 import ttk
+import io
+
+try:
+    from PIL import Image, ImageTk
+    print 'Done'
+    #msg2 = tkMessageBox('Done')
+except:
+    msg = tkMessageBox.showerror('Error!', 'You must install PIL')
+
 class mainWindow(Frame):
     def __init__(self, master):
         Frame.__init__(self, master)
@@ -78,7 +85,6 @@ class mainWindow(Frame):
         self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
         self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
 
-#<<<<<<< HEAD
         #####combobox test
         # Label(master,text="Package:").pack(padx=2,pady=2)
         # package=StringVar()
@@ -99,11 +105,6 @@ class mainWindow(Frame):
         label = Label(root, image=tk_image, bg='brown')
         #label.grid(row=0, column=1)#(padx=10, pady=20)
 
-
-#=======
-
-    
-#>>>>>>> origin/master
     #function with check button for output 
     #return 1 when check
     #return 0 when don't check
@@ -139,6 +140,7 @@ class Connect(object):
             print 'Hello'
         except:
             self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
+       
     def cal_api(self, val):
         server = 'http://api.wolframalpha.com/v2/query.jsp'
         appid = '6LA36U-7V45PGUA6E'
