@@ -45,6 +45,7 @@ class mainWindow(Frame):
         self.frame_input = ttk.LabelFrame(master, text='Enter what you want to calculate', padding=5)        
         self.frame_input.pack(padx=10, pady=10)
         self.label_frame_input = Entry(self.frame_input, width=79, textvariable = self.text_input)
+        self.label_frame_input.pack()
         
         #checkbutton for output
         self.option_frame = ttk.Labelframe(master, text='Select Output', padding=5)
