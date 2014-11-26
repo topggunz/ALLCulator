@@ -18,7 +18,7 @@ except:
     msg = tkMessageBox.showerror('Error!', 'You must install PIL')
 
 class mainWindow(Frame):
-    def __init__(self, master):
+    def __init__(self, master=None):
         Frame.__init__(self, master)
 
         #menu bar
@@ -37,75 +37,35 @@ class mainWindow(Frame):
         self.menubar.add_cascade(menu=self.helpmenu, label="Help")
         self.master.config(menu=self.menubar)
         self.pack()
-        
-        ####bymimimimi###
 
-        #label for username
-        self.username_input = StringVar()
-        self.frame_username = ttk.LabelFrame(master, text='USER NAME',padding=5)
-        self.frame_username.pack(padx=10, pady=10)   
-        #self.frame_username.grid(row=0, column=0,padx=10, pady=10)      
-        self.label_username_input = Entry(self.frame_username, width=20, textvariable = self.username_input)
-        #self.label_username_input.grid(row=0, column=0)
-        self.label_username_input.pack()
+        #Frame input
+        self.content = Frame(master ,width=300,height=200,borderwidth=2,relief="groove")
+        self.content.pack()
+        self.note = ttk.Notebook(self.content,padding=2)
+        self.data_frm1 = Frame(self.content,width=300,height=400,borderwidth=3,\
+                relief="ridge",padx=2,pady=2)
+        self.data_frm1.pack()
+        self.note.add(self.data_frm1,text="Input Area",padding=5)
+        self.note.grid(column=0,row=0,rowspan=2,padx=5,pady=5)
+        self.widgets_input()
 
-        #label for input
-        self.text_input = StringVar()
-        self.frame_input = ttk.LabelFrame(master, text='Enter what you want to calculate', padding=5)   
-        self.frame_input.pack(padx=10, pady=10)     
-        #self.frame_input.grid(row=1, column=0, padx=10, pady=10)
-        self.label_frame_input = Entry(self.frame_input, width=79, textvariable = self.text_input)
-        #self.label_frame_input.grid(row=1, column=0)
-        self.label_frame_input.pack()
-        
-        #checkbutton for output
-        self.option_frame = ttk.Labelframe(master, text='Select Output', padding=5)
-        #self.option_frame.grid(row=2, column=0,)
-        self.option_frame.pack(padx=5, pady=5)
+        # #Frame output
+        # self.content2 = Frame(master ,width=300,height=200,borderwidth=2,relief="groove")
+        # self.content2.pack()
+        # self.note2 = ttk.Notebook(self.content2,padding=2)
+        # self.data_frm2 = Frame(self.content2,width=300,height=200,borderwidth=3,\
+        #         relief="ridge",padx=2,pady=2)
+        # self.data_frm2.pack()
+        # self.note2.add(self.data_frm2,text="Output Area",padding=5)
+        # self.note2.grid(column=1,row=0,rowspan=2,padx=5,pady=5)
+        # self.data_frm3 = Frame(self.content2,width=300,height=200,borderwidth=3,\
+        #         relief="ridge",padx=2,pady=2)
+        # self.data_frm3.pack()
+        # self.widgets_output()
 
-        self.output_tp = [
-        ("Input", "Input"),
-        ("Graph", "Grap"),
-        ("Equation", "Equ"),
-        ("Solution", "Sol"),
-        ("Integer Solution", "IS")   ]
-
-        self.v = StringVar()
-        self.v.set("Input") # initialize
-
-        for text, val_output in self.output_tp:
-            self.b = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output, command=self.cb_var)
-            self.b.pack(padx=10, anchor=W)
 
         
-
         
-        #button
-        self.button_frame = Frame(master, height=2, bd=1, relief=SUNKEN)
-        self.button_frame.pack(padx=5, pady=5)
-        #self.button_frame.grid(row=3, column=0, padx=5, pady=5)
-        self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
-        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
-
-        #####combobox test
-        # Label(master,text="Package:").pack(padx=2,pady=2)
-        # package=StringVar()
-        # pack=ttk.Combobox(master,width=10,state="readonly",values=['SIP','DIP','CONN-Dual','QUAD'],textvariable=package)
-        # pack.current(0)
-        # pack.pack()
-
-        #To Generate the Content for the Picture Frame
-        #canvas = Canvas(master,width=200,height=200,background="white" ,image=tk_image)
-        #canvas.pack(fill=BOTH)
-
-        image_bytes = urllib2.urlopen(
-            "http://www.cuisinetoo.com/ill/brownies.jpg"
-            ).read()
-        data_stream = io.BytesIO(image_bytes)
-        pil_image = Image.open(data_stream)
-        tk_image = ImageTk.PhotoImage(pil_image)
-        label = Label(root, image=tk_image, bg='brown')
-        #label.grid(row=0, column=1)#(padx=10, pady=20)
 
 
     def cb_var(self):
@@ -120,6 +80,82 @@ class mainWindow(Frame):
         input = self.text_input.get()
         print 'equation', input
         connect = mainConnect.cal_api(self.text_input.get())
+
+    def widgets_input(self):
+        ####bymimimimi###
+        
+
+        #label for username
+        self.username_input = StringVar()
+        self.frame_username = ttk.LabelFrame(self.data_frm1, text='USER NAME',padding=5)
+        #self.frame_username.pack(padx=10, pady=10)   
+        self.frame_username.grid(row=1, column=0,padx=10, pady=10)      
+        self.label_username_input = Entry(self.frame_username, width=20, textvariable = self.username_input)
+        self.label_username_input.grid(row=1, column=0)
+        #self.label_username_input.pack()
+
+        #label for input
+        self.text_input = StringVar()
+        self.frame_input = ttk.LabelFrame(self.data_frm1, text='Enter what you want to calculate', padding=5)   
+        #self.frame_input.pack(padx=10, pady=10)     
+        self.frame_input.grid(row=2, column=0, padx=10, pady=10)
+        self.label_frame_input = Entry(self.frame_input, width=79, textvariable = self.text_input)
+        self.label_frame_input.grid(row=2, column=0)
+        #self.label_frame_input.pack()
+        
+        #checkbutton for output
+        self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
+        self.option_frame.grid(row=3, column=0)
+        #self.option_frame.pack(padx=5, pady=5)
+
+        self.output_tp = [
+        ("Input", "Input"),
+        ("Graph", "Grap"),
+        ("Equation", "Equ"),
+        ("Solution", "Sol"),
+        ("Integer Solution", "IS")   
+        ]
+
+        self.v = StringVar()
+        self.v.set("Input") # initialize
+        self.row = 4
+
+        for text, val_output in self.output_tp:
+            self.b = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output, command=self.cb_var)
+            self.b.grid(row=self.row, column=0, padx=10, sticky=W)
+            self.row += 1
+
+        
+
+        
+        #button
+        self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
+        #self.button_frame.pack(padx=5, pady=5)
+        self.button_frame.grid(row=8, column=0, padx=5, pady=5)
+        self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
+        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
+
+        # #####combobox test
+        # # Label(master,text="Package:").pack(padx=2,pady=2)
+        # # package=StringVar()
+        # # pack=ttk.Combobox(master,width=10,state="readonly",values=['SIP','DIP','CONN-Dual','QUAD'],textvariable=package)
+        # # pack.current(0)
+        # # pack.pack()
+
+        
+    def widgets_output(self):
+        #To Generate the Content for the Picture Frame
+        canvas = Canvas(self.data_frm2,width=200,height=200,background="red" )
+        canvas.grid(row=0, column=1)
+            
+        # image_bytes = urllib2.urlopen(
+        #     "http://www.cuisinetoo.com/ill/brownies.jpg"
+        #     ).read()
+        # data_stream = io.BytesIO(image_bytes)
+        # pil_image = Image.open(data_stream)
+        # tk_image = ImageTk.PhotoImage(pil_image)
+        # label = Label(root, image=tk_image, bg='brown')
+        # label.grid(row=0, column=1)#(padx=10, pady=20)
 
 class Connect(object):
     """Connecting the API libary"""
@@ -182,4 +218,4 @@ def popup_about():
 root = Tk()
 windows = mainWindow(root)
 mainConnect = Connect()
-root.mainloop()
+windows.mainloop()
