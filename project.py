@@ -39,7 +39,7 @@ class mainWindow(Frame):
         self.pack()
 
         #Frame input
-        self.content = Frame(master ,width=300,height=200,borderwidth=2,relief="groove")
+        self.content = Frame(master ,width=300,height=400,borderwidth=2,relief="groove")
         self.content.pack()
         self.note = ttk.Notebook(self.content,padding=2)
         self.data_frm1 = Frame(self.content,width=300,height=400,borderwidth=3,\
@@ -49,23 +49,23 @@ class mainWindow(Frame):
         self.note.grid(column=0,row=0,rowspan=2,padx=5,pady=5)
         self.widgets_input()
 
-        # #Frame output
-        # self.content2 = Frame(master ,width=300,height=200,borderwidth=2,relief="groove")
-        # self.content2.pack()
-        # self.note2 = ttk.Notebook(self.content2,padding=2)
-        # self.data_frm2 = Frame(self.content2,width=300,height=200,borderwidth=3,\
-        #         relief="ridge",padx=2,pady=2)
-        # self.data_frm2.pack()
-        # self.note2.add(self.data_frm2,text="Output Area",padding=5)
-        # self.note2.grid(column=1,row=0,rowspan=2,padx=5,pady=5)
-        # self.data_frm3 = Frame(self.content2,width=300,height=200,borderwidth=3,\
-        #         relief="ridge",padx=2,pady=2)
-        # self.data_frm3.pack()
-        # self.widgets_output()
+        #Frame output
+        self.note2 = ttk.Notebook(self.content,padding=2)
+        self.data_frm2 = Frame(self.content,width=300,height=150,borderwidth=3,\
+                relief="ridge",padx=2,pady=2)
+        self.data_frm2.pack()
+        self.data_frm3 = Frame(self.content,width=200,height=150,borderwidth=3,\
+                relief="ridge",padx=2,pady=2)
+        self.data_frm3.pack()
+        self.note2.add(self.data_frm2,text="Outnput Area",padding=5)
+        self.note2.grid(column=1,row=0,rowspan=2,padx=5,pady=5)
+        self.note2.add(self.data_frm3,text="Outnput Area2",padding=5)
+        self.note2.grid(column=1,row=1,rowspan=2,padx=5,pady=5)
 
+        #LOGO
+        canvas = Canvas(self.content,width=300,height=160,background="red" )
+        canvas.grid(row=0, column=1)
 
-        
-        
 
 
     def cb_var(self):
@@ -83,8 +83,6 @@ class mainWindow(Frame):
 
     def widgets_input(self):
         ####bymimimimi###
-        
-
         #label for username
         self.username_input = StringVar()
         self.frame_username = ttk.LabelFrame(self.data_frm1, text='USER NAME',padding=5)
@@ -99,7 +97,7 @@ class mainWindow(Frame):
         self.frame_input = ttk.LabelFrame(self.data_frm1, text='Enter what you want to calculate', padding=5)   
         #self.frame_input.pack(padx=10, pady=10)     
         self.frame_input.grid(row=2, column=0, padx=10, pady=10)
-        self.label_frame_input = Entry(self.frame_input, width=79, textvariable = self.text_input)
+        self.label_frame_input = Entry(self.frame_input, width=59, textvariable = self.text_input)
         self.label_frame_input.grid(row=2, column=0)
         #self.label_frame_input.pack()
         
