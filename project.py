@@ -23,7 +23,7 @@ class mainWindow(Frame):
 
         #menu bar
         self.master.title("All Math (Alltimate Math)")
-        #self.master.geometry("840x550")
+        #self.master.geometry("550x550")
         self.menubar = Menu(self, tearoff=False)
         self.optionmenu = Menu(self.menubar, tearoff=0)
         self.filemenu = Menu(self.menubar, tearoff=0)
@@ -85,7 +85,7 @@ class mainWindow(Frame):
         #label for username
         self.username_input = StringVar()
         self.frame_username = ttk.LabelFrame(self.data_frm1, text='USER NAME',padding=5)
-        #self.frame_username.pack(padx=10, pady=10)   
+        #self.frame_username.pack(padx=10, pady=10)   <<<<<<< HEAD
         self.frame_username.grid(row=1, column=0, padx=10, pady=10, sticky=N+W)      
         self.label_username_input = Entry(self.frame_username, width=20, textvariable = self.username_input)
         self.label_username_input.grid(row=1, column=0, sticky=N+W)
