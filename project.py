@@ -114,12 +114,14 @@ class mainWindow(Frame):
 
         #button
 
+        self.button_frame0 = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         #self.button_frame.pack(padx=5, pady=5)
-        self.button_frame.grid(row=8, column=0, padx=5, pady=5)
-        self.b_genradio = Button(self.button_frame, text="Select Output", command=self.radiobutton, padx=5, pady=2).grid(column=0, row=0)
-        self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).grid(column=0, row=1)
-        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).grid(column=1, row=1)
+        self.button_frame0.grid(row=8, column=0, padx=5, pady=5)
+        self.button_frame.grid(row=9, column=0, padx=5, pady=5)
+        self.b_genradio = Button(self.button_frame0, text="Select Output", command=self.radiobutton, padx=5, pady=2).grid(column=0, row=0)
+        self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).grid(column=0, row=0)
+        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).grid(column=1, row=0)
 
         # #####combobox test
         # # Label(master,text="Package:").pack(padx=2,pady=2)
@@ -139,13 +141,6 @@ class mainWindow(Frame):
         for name in self.pod:
             self.output_tp.append((name,count))
             count += 1
-        # [
-        # ("Input", 0),
-        # ("Graph", 1),
-        # ("Equation", 2),
-        # ("Solution", 3),
-        # ("Integer Solution", 4)    
-        # ]
 
         self.v = IntVar()
         self.v.set("Input") # initialize
@@ -167,7 +162,7 @@ class mainWindow(Frame):
         self.link.close()
         next = base64.encodestring(self.raw_data)
         self.image = PhotoImage(data=next)
-        self.data_frm2 = Label(self.content,width=300,height=230,borderwidth=3,\
+        self.data_frm2 = Label(self.content,width=300,height=270,borderwidth=3,\
                 relief="ridge",padx=2,pady=2, image=self.image, bg='white')
         self.data_frm2.pack()
         self.entryvalue = StringVar()
