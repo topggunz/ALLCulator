@@ -237,4 +237,61 @@ root = Tk()
 windows = mainWindow(root)
 mainConnect = Connect()
 windows.mainloop()
+#print 'End'       except:
+            self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
+       
+    def call_api(self, val):
+        server = 'http://api.wolframalpha.com/v2/query.jsp'
+        appid = '6LA36U-7V45PGUA6E'
+        input = val
+        waeo = wap.WolframAlphaEngine(appid, server)
+        queryStr = waeo.CreateQuery(val)
+        wap.WolframAlphaQuery(queryStr, appid)
+        result = waeo.PerformQuery(queryStr)
+        result = wap.WolframAlphaQueryResult(result)
+
+        for pod in result.Pods():
+                waPod = wap.Pod(pod)
+                title = "Pod.title: " + waPod.Title()[0]
+                print title
+                for subpod in waPod.Subpods():
+                        waSubpod = wap.Subpod(subpod)
+                        plaintext = waSubpod.Plaintext()[0]
+                        img = waSubpod.Img()
+                        src = wap.scanbranches(img[0], 'src')[0]
+                        alt = wap.scanbranches(img[0], 'alt')[0]
+                        print "-------------"
+                        print "img.src: " + src
+                        print "img.alt: " + alt
+                print "\n"
+        return src
+
+
+def reset():
+    '''for reset button'''
+    print 'Reset'
+
+def saveimage():
+    '''for save as on file.menubar'''
+    print 'saveimage'
+
+def popup_about():
+    '''popup in help on menubar'''
+    top = Toplevel()
+    top.title("About MathPro")
+    top.geometry("250x300")
+
+    about_message = 'Hello World'
+
+    msg = Message(top, text=about_message)
+    msg.pack()
+
+    button = Button(top, text="Close", command=top.destroy)
+    button.pack()
+
+
+root = Tk()
+windows = mainWindow(root)
+mainConnect = Connect()
+windows.mainloop()
 #print 'End'
