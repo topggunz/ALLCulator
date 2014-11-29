@@ -81,13 +81,10 @@ class mainWindow(Frame):
         print 'username', input
         input = self.text_input.get()
         print 'equation', input
-        connect = mainConnect.call_api(self.text_input.get())        
-        self.URL2 = mainConnect.call_api(self.text_input.get())[self.cb_var()]
-
-        self.widgets_output2(self.URL2)
-
-    
-
+        connect = mainConnect.call_api(self.text_input.get(), 'src')        
+        self.URL2 = mainConnect.call_api(self.text_input.get(), 'src')[self.cb_var()]
+        self.text = mainConnect.call_api(self.text_input.get(), 'alt')[self.cb_var()]
+        self.widgets_output2(self.URL2, self.text)
 
     def widgets_input(self):
         #label for username
@@ -129,10 +126,7 @@ class mainWindow(Frame):
             self.b = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output, command=self.cb_var)
             self.b.grid(row=self.row, column=0, padx=10, sticky=W)
             self.row += 1
-
-        
-
-        
+            
         #button
         self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         #self.button_frame.pack(padx=5, pady=5)
@@ -147,7 +141,7 @@ class mainWindow(Frame):
         # # pack.current(0)
         # # pack.pack()
  
-    def widgets_output2(self, url):
+    def widgets_output2(self, url, text):
         #To Generate the Content for the Picture Frame
         #Frame output
         self.note2 = ttk.Notebook(self.content,padding=2)
@@ -160,16 +154,17 @@ class mainWindow(Frame):
         self.image = PhotoImage(data=next)
         self.data_frm2 = Label(self.content,width=300,height=230,borderwidth=3,\
                 relief="ridge",padx=2,pady=2, image=self.image, bg='white')
-
-        #self.data_frm2 = Frame(self.content,width=300,height=230,borderwidth=3,\
-                #relief="ridge",padx=2,pady=2)
         self.data_frm2.pack()
-        self.data_frm3 = Frame(self.content,width=200,height=150,borderwidth=3,\
-                relief="ridge",padx=2,pady=2)
-        self.data_frm3.pack()
-        self.note2.add(self.data_frm2,text="Output Area",padding=5)
+        self.entryvalue = StringVar()
+        self.data_frm3 = LabelFrame(self.content,width=0,height=0,borderwidth=3,\
+                relief="ridge",padx=2,pady=2, bg='white')
+        self.entry = Entry(self.data_frm3,width=0, textvariable = self.entryvalue, font='10')
+        self.entryvalue.set(self.text)
+        self.entry.grid(column=0, row=0)
+        self.data_frm3.grid(column=0, row=0)
+        self.note2.add(self.data_frm2,text="Image Output",padding=5)
         self.note2.grid(column=1,row=0,rowspan=2,padx=5,pady=5)
-        self.note2.add(self.data_frm3,text="Output Area2",padding=5)
+        self.note2.add(self.data_frm3,text="Text Output",padding=5)
         self.note2.grid(column=1,row=1,rowspan=2,padx=5,pady=5)
 
     def widgets_output(self):
@@ -186,7 +181,7 @@ class Connect(object):
         except:
             self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
        
-    def call_api(self, val):
+    def call_api(self, val, gett):
         server = 'http://api.wolframalpha.com/v2/query.jsp'
         appid = '6LA36U-7V45PGUA6E'
         input = val
@@ -209,12 +204,17 @@ class Connect(object):
                         ls_src.append(src)
                         ls_alt.append(alt)
                         ls_src = map(str, ls_src)
+                        ls_alt = map(str, ls_alt)
                         print "-------------"
                         print "img.src: " + src
                         print "img.alt: " + alt
                 print "\n"
-        return ls_src
-
+        if gett == 'src':
+            return ls_src
+        elif gett == 'alt':
+            return ls_alt
+        # elif gett == 'pod':
+        #     return ls_pod
 
 
 def reset():
