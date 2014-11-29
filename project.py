@@ -77,11 +77,10 @@ class mainWindow(Frame):
 
     def submit(self):
         '''get input'''
-        input = self.username_input.get()
-        print 'username', input
-        input = self.text_input.get()
-        print 'equation', input
-        connect = mainConnect.call_api(self.text_input.get(), 'src')        
+        # input = self.username_input.get()
+        # print 'username', input
+        # input = self.text_input.get()
+        # print 'equation', input      
         self.URL2 = mainConnect.call_api(self.text_input.get(), 'src')[self.cb_var()]
         self.text = mainConnect.call_api(self.text_input.get(), 'alt')[self.cb_var()]
         self.widgets_output2(self.URL2, self.text)
@@ -132,8 +131,6 @@ class mainWindow(Frame):
     def radiobutton(self):
         input = self.text_input.get()
         print 'equation', input
-        connect = mainConnect.call_api(self.text_input.get(), 'src') 
-
         self.pod = mainConnect.call_api(self.text_input.get(), 'pod') 
 
         self.output_tp = []
