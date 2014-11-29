@@ -1,3 +1,4 @@
+import ttk
 """Project PSIT Startup at 11/11/2557
 Author :    Nathawut Worakijlawan 
             Amita Mongkhonpreedarchai
@@ -31,7 +32,6 @@ except:
 class mainWindow(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
-
         #menu bar
         self.master.title("All Math (Alltimate Math)")
         #self.master.geometry("550x550")
@@ -42,7 +42,7 @@ class mainWindow(Frame):
         self.filemenu.add_command(label='Exit', command=quit)
         self.helpmenu = Menu(self.menubar, tearoff=0)
         self.helpmenu.add_command(label="About", command=popup_about)
-        
+
         self.menubar.add_cascade(menu=self.filemenu, label="File")
         self.menubar.add_cascade(menu=self.optionmenu, label="Options")
         self.menubar.add_cascade(menu=self.helpmenu, label="Help")
@@ -59,62 +59,19 @@ class mainWindow(Frame):
         self.note.add(self.data_frm1,text="Input Area",padding=5)
         self.note.grid(column=0,row=0,rowspan=2,padx=5,pady=5)
         self.widgets_input()
+        self.widgets_output()
 
-        #Frame output
-        self.note2 = ttk.Notebook(self.content,padding=2)
-        #   URL from API       
-        self.URL = "http://31.media.tumblr.com/042ebfeab239688c7309f1866648eb4e/tumblr_mgxkkfvgn31ql8kmao1_400.gif"
+    def test_show(self):
+        self.URL = Connect().src
         self.link = urllib.urlopen(self.URL)
         self.raw_data = self.link.read()
         self.link.close()
         next = base64.encodestring(self.raw_data)
-        self.image = PhotoImage(data=next)
-        self.data_frm2 = Label(self.content,width=300,height=230,borderwidth=3,\
-                relief="ridge",padx=2,pady=2, image=self.image)
-
-        #self.data_frm2 = Frame(self.content,width=300,height=230,borderwidth=3,\
-                #relief="ridge",padx=2,pady=2)
-        self.data_frm2.pack()
-        self.data_frm3 = Frame(self.content,width=200,height=150,borderwidth=3,\
-                relief="ridge",padx=2,pady=2)
-        self.data_frm3.pack()
-        self.note2.add(self.data_frm2,text="Output Area",padding=5)
-        self.note2.grid(column=1,row=0,rowspan=2,padx=5,pady=5)
-        self.note2.add(self.data_frm3,text="Output Area2",padding=5)
-        self.note2.grid(column=1,row=1,rowspan=2,padx=5,pady=5)
-
-        #LOGO
-        canvas = Canvas(self.content,width=300,height=80,background="Black" )
-        canvas.grid(row=0, column=1)
-
-        
-        #self.test_show()
-        #self.printeiei()
-        
-
-
-    def test_show(self):
-        URL = "http://31.media.tumblr.com/042ebfeab239688c7309f1866648eb4e/tumblr_mgxkkfvgn31ql8kmao1_400.gif"
-        link = urllib.urlopen(URL)
-        raw_data = link.read()
-        link.close()
-        next = base64.encodestring(raw_data)
-        image = PhotoImage(data=next)
-        label = Label(self.data_frm2, image=image)
-        label.grid(row=0, column=0)
-        btn = Button(self.data_frm2, text="test btn")
-        btn.grid(row=1, column=0)
-
-    def printeiei(self):
-        canvas = Canvas(self.data_frm2, width=300,height=80,background="Black" )
-        canvas.grid(row=0, column=1)
-        print 'eiei'
-
+        self.image = PhotoImage(data=next)  
                 
     def cb_var(self):
         '''for get value to radiobutton'''
         print 'variable', self.v.get()
-
 
     def submit(self):
         '''get input'''
@@ -122,7 +79,13 @@ class mainWindow(Frame):
         print 'username', input
         input = self.text_input.get()
         print 'equation', input
-        connect = mainConnect.cal_api(self.text_input.get())
+        connect = mainConnect.call_api(self.text_input.get())        
+        self.URL2 = str(mainConnect.call_api(self.text_input.get()))
+
+        self.widgets_output2(self.URL2)
+
+    
+
 
     def widgets_input(self):
         #label for username
@@ -181,13 +144,36 @@ class mainWindow(Frame):
         # # pack=ttk.Combobox(master,width=10,state="readonly",values=['SIP','DIP','CONN-Dual','QUAD'],textvariable=package)
         # # pack.current(0)
         # # pack.pack()
-
-        
-    def widgets_output(self):
+ 
+    def widgets_output2(self, url):
         #To Generate the Content for the Picture Frame
-        canvas = Canvas(self.data_frm2,width=200,height=200,background="red" )
-        canvas.grid(row=0, column=1)
+        #Frame output
+        self.note2 = ttk.Notebook(self.content,padding=2)
+        #   URL from API       
+        self.URL = url
+        self.link = urllib.urlopen(self.URL)
+        self.raw_data = self.link.read()
+        self.link.close()
+        next = base64.encodestring(self.raw_data)
+        self.image = PhotoImage(data=next)
+        self.data_frm2 = Label(self.content,width=300,height=230,borderwidth=3,\
+                relief="ridge",padx=2,pady=2, image=self.image)
 
+        #self.data_frm2 = Frame(self.content,width=300,height=230,borderwidth=3,\
+                #relief="ridge",padx=2,pady=2)
+        self.data_frm2.pack()
+        self.data_frm3 = Frame(self.content,width=200,height=150,borderwidth=3,\
+                relief="ridge",padx=2,pady=2)
+        self.data_frm3.pack()
+        self.note2.add(self.data_frm2,text="Output Area",padding=5)
+        self.note2.grid(column=1,row=0,rowspan=2,padx=5,pady=5)
+        self.note2.add(self.data_frm3,text="Output Area2",padding=5)
+        self.note2.grid(column=1,row=1,rowspan=2,padx=5,pady=5)
+
+    def widgets_output(self):
+        #LOGO
+        canvas = Canvas(self.content,width=300,height=80,background="Black" )
+        canvas.grid(row=0, column=1)
 
 class Connect(object):
     """Connecting the API libary"""
@@ -198,7 +184,7 @@ class Connect(object):
         except:
             self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
        
-    def cal_api(self, val):
+    def call_api(self, val):
         server = 'http://api.wolframalpha.com/v2/query.jsp'
         appid = '6LA36U-7V45PGUA6E'
         input = val
@@ -222,6 +208,7 @@ class Connect(object):
                         print "img.src: " + src
                         print "img.alt: " + alt
                 print "\n"
+        return src
 
 
 def reset():
@@ -248,7 +235,6 @@ def popup_about():
 
 
 root = Tk()
-root.resizable(0, 0)
 windows = mainWindow(root)
 mainConnect = Connect()
 windows.mainloop()
