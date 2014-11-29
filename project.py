@@ -76,20 +76,8 @@ class mainWindow(Frame):
         #LOGO
         canvas = Canvas(self.content,width=300,height=80,background="Black" )
         canvas.grid(row=0, column=1)
-        
 
 
-##    def test_show(self):
-##        URL = "http://www5b.wolframalpha.com/Calculate/MSP/MSP1269205d649di636g5g300001a0a299c4b6e67bi?MSPStoreType=image/gif&s=61&w=150.&h=149.&cdf=Resizeable&cdf=Rotation"
-##        link = urllib.urlopen(URL)
-##        raw_data = link.read()
-##        link.close()
-##        next = base64.encodestring(raw_data)
-##        image = PhotoImage(data=next)
-##        label = Label(image=image)
-##        label.grid(row=1, column=3)
-
-        
                 
     def cb_var(self):
         '''for get value to radiobutton'''
