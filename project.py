@@ -71,6 +71,8 @@ class mainWindow(Frame):
     def cb_var(self):
         '''for get value to radiobutton'''
         print 'variable', self.v.get()
+        index = self.v.get()
+        return index
 
     def submit(self):
         '''get input'''
@@ -79,8 +81,7 @@ class mainWindow(Frame):
         input = self.text_input.get()
         print 'equation', input
         connect = mainConnect.call_api(self.text_input.get())        
-        self.URL2 = str(mainConnect.call_api(self.text_input.get()))
-
+        self.URL2 = mainConnect.call_api(self.text_input.get())[self.cb_var()]
         self.widgets_output2(self.URL2)
 
     
@@ -111,14 +112,14 @@ class mainWindow(Frame):
         #self.option_frame.pack(padx=5, pady=5)
 
         self.output_tp = [
-        ("Input", "Input"),
-        ("Graph", "Grap"),
-        ("Equation", "Equ"),
-        ("Solution", "Sol"),
-        ("Integer Solution", "IS")   
+        ("Input", 0),
+        ("Graph", 1),
+        ("Equation", 2),
+        ("Solution", 3),
+        ("Integer Solution", 4)   
         ]
 
-        self.v = StringVar()
+        self.v = IntVar()
         self.v.set("Input") # initialize
         self.row = 4
 
@@ -156,7 +157,7 @@ class mainWindow(Frame):
         next = base64.encodestring(self.raw_data)
         self.image = PhotoImage(data=next)
         self.data_frm2 = Label(self.content,width=300,height=230,borderwidth=3,\
-                relief="ridge",padx=2,pady=2, image=self.image)
+                relief="ridge",padx=2,pady=2, image=self.image, bg='white')
 
         #self.data_frm2 = Frame(self.content,width=300,height=230,borderwidth=3,\
                 #relief="ridge",padx=2,pady=2)
@@ -193,6 +194,7 @@ class Connect(object):
         result = waeo.PerformQuery(queryStr)
         result = wap.WolframAlphaQueryResult(result)
 
+        ls_alt, ls_src = [], []
         for pod in result.Pods():
                 waPod = wap.Pod(pod)
                 title = "Pod.title: " + waPod.Title()[0]
@@ -203,11 +205,14 @@ class Connect(object):
                         img = waSubpod.Img()
                         src = wap.scanbranches(img[0], 'src')[0]
                         alt = wap.scanbranches(img[0], 'alt')[0]
+                        ls_src.append(src)
+                        ls_alt.append(alt)
+                        ls_src = map(str, ls_src)
                         print "-------------"
                         print "img.src: " + src
                         print "img.alt: " + alt
                 print "\n"
-        return src
+        return ls_src
 
 
 def reset():
