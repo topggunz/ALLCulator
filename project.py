@@ -86,10 +86,7 @@ class mainWindow(Frame):
         #LOGO
         canvas = Canvas(self.content,width=300,height=80,background="Black" )
         canvas.grid(row=0, column=1)
-<<<<<<< HEAD
 
-
-=======
         
         #self.test_show()
         #self.printeiei()
@@ -112,8 +109,7 @@ class mainWindow(Frame):
         canvas = Canvas(self.data_frm2, width=300,height=80,background="Black" )
         canvas.grid(row=0, column=1)
         print 'eiei'
-        
->>>>>>> origin/master
+
                 
     def cb_var(self):
         '''for get value to radiobutton'''
@@ -252,6 +248,7 @@ def popup_about():
 
 
 root = Tk()
+root.resizable(0, 0)
 windows = mainWindow(root)
 mainConnect = Connect()
 windows.mainloop()
