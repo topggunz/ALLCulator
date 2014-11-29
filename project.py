@@ -62,8 +62,18 @@ class mainWindow(Frame):
 
         #Frame output
         self.note2 = ttk.Notebook(self.content,padding=2)
-        self.data_frm2 = Frame(self.content,width=300,height=230,borderwidth=3,\
-                relief="ridge",padx=2,pady=2)
+        #   URL from API       
+        self.URL = "http://31.media.tumblr.com/042ebfeab239688c7309f1866648eb4e/tumblr_mgxkkfvgn31ql8kmao1_400.gif"
+        self.link = urllib.urlopen(self.URL)
+        self.raw_data = self.link.read()
+        self.link.close()
+        next = base64.encodestring(self.raw_data)
+        self.image = PhotoImage(data=next)
+        self.data_frm2 = Label(self.content,width=300,height=230,borderwidth=3,\
+                relief="ridge",padx=2,pady=2, image=self.image)
+
+        #self.data_frm2 = Frame(self.content,width=300,height=230,borderwidth=3,\
+                #relief="ridge",padx=2,pady=2)
         self.data_frm2.pack()
         self.data_frm3 = Frame(self.content,width=200,height=150,borderwidth=3,\
                 relief="ridge",padx=2,pady=2)
@@ -76,8 +86,34 @@ class mainWindow(Frame):
         #LOGO
         canvas = Canvas(self.content,width=300,height=80,background="Black" )
         canvas.grid(row=0, column=1)
+<<<<<<< HEAD
 
 
+=======
+        
+        #self.test_show()
+        #self.printeiei()
+        
+
+
+    def test_show(self):
+        URL = "http://31.media.tumblr.com/042ebfeab239688c7309f1866648eb4e/tumblr_mgxkkfvgn31ql8kmao1_400.gif"
+        link = urllib.urlopen(URL)
+        raw_data = link.read()
+        link.close()
+        next = base64.encodestring(raw_data)
+        image = PhotoImage(data=next)
+        label = Label(self.data_frm2, image=image)
+        label.grid(row=0, column=0)
+        btn = Button(self.data_frm2, text="test btn")
+        btn.grid(row=1, column=0)
+
+    def printeiei(self):
+        canvas = Canvas(self.data_frm2, width=300,height=80,background="Black" )
+        canvas.grid(row=0, column=1)
+        print 'eiei'
+        
+>>>>>>> origin/master
                 
     def cb_var(self):
         '''for get value to radiobutton'''
@@ -155,15 +191,7 @@ class mainWindow(Frame):
         #To Generate the Content for the Picture Frame
         canvas = Canvas(self.data_frm2,width=200,height=200,background="red" )
         canvas.grid(row=0, column=1)
-            
-        # image_bytes = urllib2.urlopen(
-        #     "http://www.cuisinetoo.com/ill/brownies.jpg"
-        #     ).read()
-        # data_stream = io.BytesIO(image_bytes)
-        # pil_image = Image.open(data_stream)
-        # tk_image = ImageTk.PhotoImage(pil_image)
-        # label = Label(root, image=tk_image, bg='brown')
-        # label.grid(row=0, column=1)#(padx=10, pady=20)
+
 
 class Connect(object):
     """Connecting the API libary"""
@@ -227,3 +255,4 @@ root = Tk()
 windows = mainWindow(root)
 mainConnect = Connect()
 windows.mainloop()
+#print 'End'
