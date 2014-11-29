@@ -110,29 +110,16 @@ class mainWindow(Frame):
         self.option_frame.grid(row=3, column=0, padx=5, pady=5)
         #self.option_frame.pack(padx=5, pady=5)
 
-        self.output_tp = [
-        ("Input", 0),
-        ("Graph", 1),
-        ("Equation", 2),
-        ("Solution", 3),
-        ("Integer Solution", 4)    
-        ]
+        
 
-        self.v = IntVar()
-        self.v.set("Input") # initialize
-        self.row = 4
-
-        for text, val_output in self.output_tp:
-            self.b = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output, command=self.cb_var)
-            self.b.grid(row=self.row, column=0, padx=10, sticky=W)
-            self.row += 1
-            
         #button
+
         self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         #self.button_frame.pack(padx=5, pady=5)
         self.button_frame.grid(row=8, column=0, padx=5, pady=5)
-        self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
-        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
+        self.b_genradio = Button(self.button_frame, text="Select Output", command=self.radiobutton, padx=5, pady=2).grid(column=0, row=0)
+        self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).grid(column=0, row=1)
+        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).grid(column=1, row=1)
 
         # #####combobox test
         # # Label(master,text="Package:").pack(padx=2,pady=2)
@@ -140,6 +127,34 @@ class mainWindow(Frame):
         # # pack=ttk.Combobox(master,width=10,state="readonly",values=['SIP','DIP','CONN-Dual','QUAD'],textvariable=package)
         # # pack.current(0)
         # # pack.pack()
+    def radiobutton(self):
+        input = self.text_input.get()
+        print 'equation', input
+        connect = mainConnect.call_api(self.text_input.get(), 'src') 
+
+        self.pod = mainConnect.call_api(self.text_input.get(), 'pod') 
+
+        self.output_tp = []
+        count = 0
+        for name in self.pod:
+            self.output_tp.append((name,count))
+            count += 1
+        # [
+        # ("Input", 0),
+        # ("Graph", 1),
+        # ("Equation", 2),
+        # ("Solution", 3),
+        # ("Integer Solution", 4)    
+        # ]
+
+        self.v = IntVar()
+        self.v.set("Input") # initialize
+        self.row = 4
+
+        for text, val_output in self.output_tp:
+            self.radio = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output)
+            self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
+            self.row += 1
  
     def widgets_output2(self, url, text):
         #To Generate the Content for the Picture Frame
@@ -190,11 +205,16 @@ class Connect(object):
         wap.WolframAlphaQuery(queryStr, appid)
         result = waeo.PerformQuery(queryStr)
         result = wap.WolframAlphaQueryResult(result)
-        ls_alt, ls_src = [], []
+        # 'result.Pods()', result.Pods()
+        ls_alt, ls_src, ls_pod = [], [], []
+        print ls_pod
+
         for pod in result.Pods():
                 waPod = wap.Pod(pod)
                 title = "Pod.title: " + waPod.Title()[0]
                 print title
+                #print ls_pod
+                ls_pod.append(waPod.Title()[0])
                 for subpod in waPod.Subpods():
                         waSubpod = wap.Subpod(subpod)
                         plaintext = waSubpod.Plaintext()[0]
@@ -209,12 +229,13 @@ class Connect(object):
                         print "img.src: " + src
                         print "img.alt: " + alt
                 print "\n"
+        print 'ls_pod', ls_pod
         if gett == 'src':
             return ls_src
         elif gett == 'alt':
             return ls_alt
-        # elif gett == 'pod':
-        #     return ls_pod
+        elif gett == 'pod':
+            return ls_pod
 
 
 def reset():
