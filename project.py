@@ -20,7 +20,8 @@ import urllib2
 import wap
 import tkMessageBox
 import ttk
-
+import sys
+import Tkinter
 
 try:
     from PIL import Image, ImageTk
@@ -80,6 +81,15 @@ class Windows(Frame):
         self.text = mainConnect.call_api(self.text_input.get(), 'alt')[self.cb_var()]
         self.widgets_output2(self.URL2, self.text)
 
+    def reset(self):
+        '''for reset button'''
+        # self.username_input.get = ''
+        # self.label_username_input.text=''
+        self.label_username_input.delete(0, Tkinter.END)
+        #self.radiobutton()
+        print 'Reset'
+
+
     def widgets_input(self):
         #label for username
         self.username_input = StringVar()
@@ -134,7 +144,7 @@ class Windows(Frame):
             self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
             self.row += 1
         self.b_submit = Button(self.button_frame, text="Select Output", command=self.submit, padx=5, pady=2).grid(column=0, row=0)
-        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).grid(column=1, row=0)
+        self.b_reset = Button(self.button_frame, text="Reset", command=self.reset, padx=5, pady=2).grid(column=1, row=0)
  
     def widgets_output2(self, url, text):
         '''To Generate the Content for the Picture Frame'''
@@ -218,9 +228,7 @@ class Connect(object):
             return ls_pod
 
 
-def reset():
-    '''for reset button'''
-    print 'Reset'
+
 
 def saveimage():
     '''for save as on file.menubar'''
