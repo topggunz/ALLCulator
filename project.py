@@ -244,9 +244,5 @@ def popup_about():
 root = Tk()
 windows = Windows(root)
 mainConnect = Connect()
-<<<<<<< HEAD
 windows.mainloop()
 #print 'End'
-=======
-windows.mainloop()
->>>>>>> origin/master
