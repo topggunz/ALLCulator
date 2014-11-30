@@ -25,11 +25,10 @@ import ttk
 try:
     from PIL import Image, ImageTk
     print 'Done'
-    #msg2 = tkMessageBox('Done')
 except:
     msg = tkMessageBox.showerror('Error!', 'You must install PIL')
 
-class mainWindow(Frame):
+class Windows(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
         #menu bar
@@ -76,69 +75,37 @@ class mainWindow(Frame):
         return index
 
     def submit(self):
-        '''get input'''
-        input = self.username_input.get()
-        print 'username', input
-        input = self.text_input.get()
-        print 'equation', input
-        connect = mainConnect.call_api(self.text_input.get())        
-        self.URL2 = mainConnect.call_api(self.text_input.get())[self.cb_var()]
-
-        self.widgets_output2(self.URL2)
-
-    
-
+        '''get input'''   
+        self.URL2 = mainConnect.call_api(self.text_input.get(), 'src')[self.cb_var()]
+        self.text = mainConnect.call_api(self.text_input.get(), 'alt')[self.cb_var()]
+        self.widgets_output2(self.URL2, self.text)
 
     def widgets_input(self):
         #label for username
         self.username_input = StringVar()
         self.frame_username = ttk.LabelFrame(self.data_frm1, text='USER NAME',padding=5)
-        #self.frame_username.pack(padx=10, pady=10)   <<<<<<< HEAD
         self.frame_username.grid(row=1, column=0, padx=10, pady=10, sticky=N+W)      
         self.label_username_input = Entry(self.frame_username, width=20, textvariable = self.username_input)
         self.label_username_input.grid(row=1, column=0, sticky=N+W)
-        #self.label_username_input.pack()
 
         #label for input
         self.text_input = StringVar()
-        self.frame_input = ttk.LabelFrame(self.data_frm1, text='Enter what you want to calculate', padding=5)   
-        #self.frame_input.pack(padx=10, pady=10)     
+        self.frame_input = ttk.LabelFrame(self.data_frm1, text='Enter what you want to calculate', padding=5)
         self.frame_input.grid(row=2, column=0, padx=10, pady=10)
         self.label_frame_input = Entry(self.frame_input, width=59, textvariable = self.text_input)
         self.label_frame_input.grid(row=2, column=0)
-        #self.label_frame_input.pack()
         
         #checkbutton for output
         self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
-        self.option_frame.grid(row=3, column=0, padx=5, pady=5)
-        #self.option_frame.pack(padx=5, pady=5)
+        self.option_frame.grid(row=9, column=0, padx=5, pady=5)
 
-        self.output_tp = [
-        ("Input", 0),
-        ("Graph", 1),
-        ("Equation", 2),
-        ("Solution", 3),
-        ("Integer Solution", 4)    
-        ]
-
-        self.v = IntVar()
-        self.v.set("Input") # initialize
-        self.row = 4
-
-        for text, val_output in self.output_tp:
-            self.b = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output, command=self.cb_var)
-            self.b.grid(row=self.row, column=0, padx=10, sticky=W)
-            self.row += 1
-
-        
-
-        
         #button
+        self.button_frame0 = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
-        #self.button_frame.pack(padx=5, pady=5)
-        self.button_frame.grid(row=8, column=0, padx=5, pady=5)
-        self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).pack(side=LEFT)
-        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).pack(side=LEFT)
+        self.button_frame0.grid(row=8, column=0, padx=5, pady=5)
+        self.button_frame.grid(row=10, column=0, padx=5, pady=5)
+        self.b_genradio = Button(self.button_frame0, text="Submit", command=self.radiobutton, padx=5, pady=2).grid(column=0, row=0)
+        
 
         # #####combobox test
         # # Label(master,text="Package:").pack(padx=2,pady=2)
@@ -146,10 +113,32 @@ class mainWindow(Frame):
         # # pack=ttk.Combobox(master,width=10,state="readonly",values=['SIP','DIP','CONN-Dual','QUAD'],textvariable=package)
         # # pack.current(0)
         # # pack.pack()
+    def radiobutton(self):
+
+        input = self.text_input.get()
+        print 'equation', input
+        self.pod = mainConnect.call_api(self.text_input.get(), 'pod') 
+
+        self.output_tp = []
+        count = 0
+        for name in self.pod:
+            self.output_tp.append((name,count))
+            count += 1
+
+        self.v = IntVar()
+        self.v.set("Input") # initialize
+        self.row = 0
+
+        for text, val_output in self.output_tp:
+            self.radio = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output)
+            self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
+            self.row += 1
+        self.b_submit = Button(self.button_frame, text="Select Output", command=self.submit, padx=5, pady=2).grid(column=0, row=0)
+        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).grid(column=1, row=0)
  
-    def widgets_output2(self, url):
-        #To Generate the Content for the Picture Frame
-        #Frame output
+    def widgets_output2(self, url, text):
+        '''To Generate the Content for the Picture Frame'''
+        #Frame output'''
         self.note2 = ttk.Notebook(self.content,padding=2)
         #   URL from API       
         self.URL = url
@@ -158,18 +147,19 @@ class mainWindow(Frame):
         self.link.close()
         next = base64.encodestring(self.raw_data)
         self.image = PhotoImage(data=next)
-        self.data_frm2 = Label(self.content,width=300,height=230,borderwidth=3,\
+        self.data_frm2 = Label(self.content,width=300,height=270,borderwidth=3,\
                 relief="ridge",padx=2,pady=2, image=self.image, bg='white')
-
-        #self.data_frm2 = Frame(self.content,width=300,height=230,borderwidth=3,\
-                #relief="ridge",padx=2,pady=2)
         self.data_frm2.pack()
-        self.data_frm3 = Frame(self.content,width=200,height=150,borderwidth=3,\
-                relief="ridge",padx=2,pady=2)
-        self.data_frm3.pack()
-        self.note2.add(self.data_frm2,text="Output Area",padding=5)
+        self.entryvalue = StringVar()
+        self.data_frm3 = LabelFrame(self.content,width=0,height=0,borderwidth=3,\
+                relief="ridge",padx=2,pady=2, bg='white')
+        self.entry = Entry(self.data_frm3,width=0, textvariable = self.entryvalue, font='10')
+        self.entryvalue.set(self.text)
+        self.entry.grid(column=0, row=0)
+        self.data_frm3.grid(column=0, row=0)
+        self.note2.add(self.data_frm2,text="Image Output",padding=5)
         self.note2.grid(column=1,row=0,rowspan=2,padx=5,pady=5)
-        self.note2.add(self.data_frm3,text="Output Area2",padding=5)
+        self.note2.add(self.data_frm3,text="Text Output",padding=5)
         self.note2.grid(column=1,row=1,rowspan=2,padx=5,pady=5)
 
     def widgets_output(self):
@@ -186,7 +176,7 @@ class Connect(object):
         except:
             self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
        
-    def call_api(self, val):
+    def call_api(self, val, gett):
         server = 'http://api.wolframalpha.com/v2/query.jsp'
         appid = '6LA36U-7V45PGUA6E'
         input = val
@@ -195,11 +185,16 @@ class Connect(object):
         wap.WolframAlphaQuery(queryStr, appid)
         result = waeo.PerformQuery(queryStr)
         result = wap.WolframAlphaQueryResult(result)
-        ls_alt, ls_src = [], []
+        # 'result.Pods()', result.Pods()
+        ls_alt, ls_src, ls_pod = [], [], []
+        print ls_pod
+
         for pod in result.Pods():
                 waPod = wap.Pod(pod)
                 title = "Pod.title: " + waPod.Title()[0]
                 print title
+                #print ls_pod
+                ls_pod.append(waPod.Title()[0])
                 for subpod in waPod.Subpods():
                         waSubpod = wap.Subpod(subpod)
                         plaintext = waSubpod.Plaintext()[0]
@@ -208,13 +203,19 @@ class Connect(object):
                         alt = wap.scanbranches(img[0], 'alt')[0]
                         ls_src.append(src)
                         ls_alt.append(alt)
-                        ls_src = map(str, ls_src)
                         print "-------------"
                         print "img.src: " + src
                         print "img.alt: " + alt
+                        ls_src = map(str, ls_src)
+                        #ls_alt = map(str, ls_alt)
                 print "\n"
-        return ls_src
-
+        print 'ls_pod', ls_pod
+        if gett == 'src':
+            return ls_src
+        elif gett == 'alt':
+            return ls_alt
+        elif gett == 'pod':
+            return ls_pod
 
 
 def reset():
@@ -241,7 +242,11 @@ def popup_about():
 
 
 root = Tk()
-windows = mainWindow(root)
+windows = Windows(root)
 mainConnect = Connect()
+<<<<<<< HEAD
 windows.mainloop()
 #print 'End'
+=======
+windows.mainloop()
+>>>>>>> origin/master
