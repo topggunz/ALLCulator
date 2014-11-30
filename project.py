@@ -97,16 +97,15 @@ class Windows(Frame):
         
         #checkbutton for output
         self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
-        self.option_frame.grid(row=3, column=0, padx=5, pady=5)
+        self.option_frame.grid(row=9, column=0, padx=5, pady=5)
 
         #button
         self.button_frame0 = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         self.button_frame0.grid(row=8, column=0, padx=5, pady=5)
-        self.button_frame.grid(row=9, column=0, padx=5, pady=5)
-        self.b_genradio = Button(self.button_frame0, text="Select Output", command=self.radiobutton, padx=5, pady=2).grid(column=0, row=0)
-        self.b_submit = Button(self.button_frame, text="Submit", command=self.submit, padx=5, pady=2).grid(column=0, row=0)
-        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).grid(column=1, row=0)
+        self.button_frame.grid(row=10, column=0, padx=5, pady=5)
+        self.b_genradio = Button(self.button_frame0, text="Submit", command=self.radiobutton, padx=5, pady=2).grid(column=0, row=0)
+        
 
         # #####combobox test
         # # Label(master,text="Package:").pack(padx=2,pady=2)
@@ -115,6 +114,7 @@ class Windows(Frame):
         # # pack.current(0)
         # # pack.pack()
     def radiobutton(self):
+
         input = self.text_input.get()
         print 'equation', input
         self.pod = mainConnect.call_api(self.text_input.get(), 'pod') 
@@ -127,12 +127,14 @@ class Windows(Frame):
 
         self.v = IntVar()
         self.v.set("Input") # initialize
-        self.row = 4
+        self.row = 0
 
         for text, val_output in self.output_tp:
             self.radio = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output)
             self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
             self.row += 1
+        self.b_submit = Button(self.button_frame, text="Select Output", command=self.submit, padx=5, pady=2).grid(column=0, row=0)
+        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).grid(column=1, row=0)
  
     def widgets_output2(self, url, text):
         '''To Generate the Content for the Picture Frame'''
