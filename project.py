@@ -246,4 +246,7 @@ windows = Windows(root)
 mainConnect = Connect()
 windows.mainloop()
 #print 'End'
+<<<<<<< HEAD
 windows.mainloop()
+=======
+>>>>>>> origin/master
