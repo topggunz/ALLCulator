@@ -32,7 +32,7 @@ class Windows(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
         #menu bar
-        self.master.title("All Math (Alltimate Math)")
+        self.master.title("AllCulator (build 1)")
         #self.master.geometry("550x550")
         self.menubar = Menu(self, tearoff=False)
         self.optionmenu = Menu(self.menubar, tearoff=0)
@@ -244,9 +244,6 @@ def popup_about():
 root = Tk()
 windows = Windows(root)
 mainConnect = Connect()
-<<<<<<< HEAD
 windows.mainloop()
 #print 'End'
-=======
 windows.mainloop()
->>>>>>> origin/master
