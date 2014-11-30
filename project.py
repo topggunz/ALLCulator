@@ -25,11 +25,10 @@ import ttk
 try:
     from PIL import Image, ImageTk
     print 'Done'
-    #msg2 = tkMessageBox('Done')
 except:
     msg = tkMessageBox.showerror('Error!', 'You must install PIL')
 
-class mainWindow(Frame):
+class Windows(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
         #menu bar
@@ -76,11 +75,7 @@ class mainWindow(Frame):
         return index
 
     def submit(self):
-        '''get input'''
-        # input = self.username_input.get()
-        # print 'username', input
-        # input = self.text_input.get()
-        # print 'equation', input      
+        '''get input'''   
         self.URL2 = mainConnect.call_api(self.text_input.get(), 'src')[self.cb_var()]
         self.text = mainConnect.call_api(self.text_input.get(), 'alt')[self.cb_var()]
         self.widgets_output2(self.URL2, self.text)
@@ -89,33 +84,24 @@ class mainWindow(Frame):
         #label for username
         self.username_input = StringVar()
         self.frame_username = ttk.LabelFrame(self.data_frm1, text='USER NAME',padding=5)
-        #self.frame_username.pack(padx=10, pady=10)   <<<<<<< HEAD
         self.frame_username.grid(row=1, column=0, padx=10, pady=10, sticky=N+W)      
         self.label_username_input = Entry(self.frame_username, width=20, textvariable = self.username_input)
         self.label_username_input.grid(row=1, column=0, sticky=N+W)
-        #self.label_username_input.pack()
 
         #label for input
         self.text_input = StringVar()
-        self.frame_input = ttk.LabelFrame(self.data_frm1, text='Enter what you want to calculate', padding=5)   
-        #self.frame_input.pack(padx=10, pady=10)     
+        self.frame_input = ttk.LabelFrame(self.data_frm1, text='Enter what you want to calculate', padding=5)
         self.frame_input.grid(row=2, column=0, padx=10, pady=10)
         self.label_frame_input = Entry(self.frame_input, width=59, textvariable = self.text_input)
         self.label_frame_input.grid(row=2, column=0)
-        #self.label_frame_input.pack()
         
         #checkbutton for output
         self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
         self.option_frame.grid(row=3, column=0, padx=5, pady=5)
-        #self.option_frame.pack(padx=5, pady=5)
-
-        
 
         #button
-
         self.button_frame0 = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
-        #self.button_frame.pack(padx=5, pady=5)
         self.button_frame0.grid(row=8, column=0, padx=5, pady=5)
         self.button_frame.grid(row=9, column=0, padx=5, pady=5)
         self.b_genradio = Button(self.button_frame0, text="Select Output", command=self.radiobutton, padx=5, pady=2).grid(column=0, row=0)
@@ -149,8 +135,8 @@ class mainWindow(Frame):
             self.row += 1
  
     def widgets_output2(self, url, text):
-        #To Generate the Content for the Picture Frame
-        #Frame output
+        '''To Generate the Content for the Picture Frame'''
+        #Frame output'''
         self.note2 = ttk.Notebook(self.content,padding=2)
         #   URL from API       
         self.URL = url
@@ -215,11 +201,11 @@ class Connect(object):
                         alt = wap.scanbranches(img[0], 'alt')[0]
                         ls_src.append(src)
                         ls_alt.append(alt)
-                        ls_src = map(str, ls_src)
-                        ls_alt = map(str, ls_alt)
                         print "-------------"
                         print "img.src: " + src
                         print "img.alt: " + alt
+                        ls_src = map(str, ls_src)
+                        #ls_alt = map(str, ls_alt)
                 print "\n"
         print 'ls_pod', ls_pod
         if gett == 'src':
@@ -254,7 +240,6 @@ def popup_about():
 
 
 root = Tk()
-windows = mainWindow(root)
+windows = Windows(root)
 mainConnect = Connect()
 windows.mainloop()
-#print 'End'
