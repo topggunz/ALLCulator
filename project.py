@@ -78,6 +78,9 @@ class Windows(Frame):
         '''get input'''   
         self.URL2 = mainConnect.call_api(self.text_input.get(), 'src')[self.cb_var()]
         self.text = mainConnect.call_api(self.text_input.get(), 'alt')[self.cb_var()]
+        print 'URL2', self.URL2
+        print 'text', self.text
+        print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
         self.widgets_output2(self.URL2, self.text)
 
     def widgets_input(self):
@@ -102,8 +105,6 @@ class Windows(Frame):
         #button
         self.button_frame0 = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         self.button_frame0.grid(row=8, column=0, padx=5, pady=5)
-        self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
-        self.button_frame.grid(row=10, column=0, padx=5, pady=5)
         self.b_genradio = Button(self.button_frame0, text="Submit", command=self.radiobutton, padx=5, pady=2).grid(column=0, row=0)
         
 
@@ -133,6 +134,8 @@ class Windows(Frame):
             self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
             self.row += 1
 
+        self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
+        self.button_frame.grid(row=10, column=0, padx=5, pady=5)
         self.b_submit = Button(self.button_frame, text="Select Output", command=self.submit, padx=5, pady=2).grid(column=0, row=0)
         self.b_reset = Button(self.button_frame, text="Reset", command=self.reset, padx=5, pady=2).grid(column=1, row=0)
  
@@ -171,9 +174,34 @@ class Windows(Frame):
         '''for reset button'''
         self.label_username_input.delete(0, END)
         self.label_frame_input.delete(0, END)
-        self.ls_widgets2 = [self.note2, self.data_frm2, self.data_frm3, self.option_frame, self.button_frame, self.entry]
-        for wid in self.ls_widgets2:
+
+        self.ls_widgets = [self.note2, self.data_frm2, self.data_frm3, self.option_frame, self.button_frame]
+        for wid in self.ls_widgets:
             wid.grid_remove() 
+
+        #self.radiobutton()
+        input = self.text_input.get()
+        print 'equation', input
+        self.pod = mainConnect.call_api(self.text_input.get(), 'pod')
+
+        self.output_tp = []
+        count = 0
+        for name in self.pod:
+            self.output_tp.append((name,count))
+            count += 1
+
+        self.v = IntVar()
+        self.v.set("Input") # initialize
+        self.row = 0
+
+        for text, val_output in self.output_tp:
+            self.radio = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output)
+            self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
+            self.row += 1
+
+        self.ls_widgets2 = [self.option_frame]
+        for wid2 in self.ls_widgets2:
+            wid2.grid()
 
 class Connect(object):
     """Connecting the API libary"""
