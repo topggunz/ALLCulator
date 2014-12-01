@@ -261,8 +261,26 @@ def saveimage():
     pass   
 
 def popup_about():
-    messagebox.showinfo(title="About",message="Test")
-    return
+    top = Toplevel()
+    top.title("About AllCulator")
+    top.geometry("280x380")
+    Label(text="one").pack()
+    f = Frame(top, width=280,height=70,bg="lightgreen")
+    f.grid(column=0,row=0,rowspan=1,padx=0,pady=0)
+    
+    about_message = ' +:+ AllCulator +:+ ' 
+    msg = Message(f, text=about_message)
+    msg.config(width=280, bg="lightgreen", font=('tahoma', 14, 'bold'))
+    msg.place(x=35, y=15) 
+
+    about_message2 = 'Build With WolframAlpha'
+    msg2 = Message(top, text=about_message2)
+    msg2.config(width=280, bg="lightgreen", font=('tahoma', 10))
+    msg2.place(x=95, y=40)
+
+    button = Button(top, text="Close!", command=top.destroy)
+    button.place(x=125, y=350)
+    top.resizable(width=FALSE, height=FALSE)
 
 def run_program():
     pass
