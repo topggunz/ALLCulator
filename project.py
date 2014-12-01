@@ -207,6 +207,7 @@ class Connect(object):
                         print "img.src: " + src
                         print "img.alt: " + alt
                         ls_src = map(str, ls_src)
+                        break
                         #ls_alt = map(str, ls_alt)
                 print "\n"
         print 'ls_pod', ls_pod
@@ -246,7 +247,3 @@ windows = Windows(root)
 mainConnect = Connect()
 windows.mainloop()
 #print 'End'
-<<<<<<< HEAD
-windows.mainloop()
-=======
->>>>>>> origin/master
