@@ -180,9 +180,7 @@ class Windows(Frame):
         # root = Tk()
         # windows = Windows(root)
         # mainConnect = Connect()
-        # windows.mainloop()
-
-        
+        # windows.mainloop()        
 
 class Connect(object):
     """Connecting the API libary"""
@@ -255,9 +253,6 @@ def popup_about():
 
     button = Button(top, text="Close", command=top.destroy)
     button.pack()
-
-def run_program():
-    pass
 
 root = Tk()
 windows = Windows(root)
