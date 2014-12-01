@@ -237,26 +237,16 @@ class Connect(object):
 
 
 def saveimage():
-    '''for save as on file.menubar'''
-    print 'saveimage'
+    pass   
 
 def popup_about():
-    '''popup in help on menubar'''
-    top = Toplevel()
-    top.title("About MathPro")
-    top.geometry("250x300")
-
-    about_message = 'Hello World'
-
-    msg = Message(top, text=about_message)
-    msg.pack()
-
-    button = Button(top, text="Close", command=top.destroy)
-    button.pack()
+    messagebox.showinfo(title="About",message="Test")
+    return
+def run_program():
+    pass
 
 root = Tk()
 windows = Windows(root)
 mainConnect = Connect()
 windows.mainloop()
 
-#print 'End'
