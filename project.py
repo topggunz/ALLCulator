@@ -241,24 +241,18 @@ class Connect(object):
 def saveimage():
     pass   
 
-
-<<<<<<< HEAD
 def popup_about():
     messagebox.showinfo(title="About",message="Test")
     return
-=======
+
 def run_program():
     pass
->>>>>>> origin/master
 
 root = Tk()
 windows = Windows(root)
 mainConnect = Connect()
 windows.mainloop()
-<<<<<<< HEAD
 #print 'End'
 windows.mainloop()
-=======
 
 #print 'End'
->>>>>>> origin/master
