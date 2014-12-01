@@ -101,8 +101,8 @@ class Windows(Frame):
 
         #button
         self.button_frame0 = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
-        self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         self.button_frame0.grid(row=8, column=0, padx=5, pady=5)
+        self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
         self.button_frame.grid(row=10, column=0, padx=5, pady=5)
         self.b_genradio = Button(self.button_frame0, text="Submit", command=self.radiobutton, padx=5, pady=2).grid(column=0, row=0)
         
@@ -114,7 +114,6 @@ class Windows(Frame):
         # # pack.current(0)
         # # pack.pack()
     def radiobutton(self):
-
         input = self.text_input.get()
         print 'equation', input
         self.pod = mainConnect.call_api(self.text_input.get(), 'pod') 
@@ -133,6 +132,7 @@ class Windows(Frame):
             self.radio = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output)
             self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
             self.row += 1
+
         self.b_submit = Button(self.button_frame, text="Select Output", command=self.submit, padx=5, pady=2).grid(column=0, row=0)
         self.b_reset = Button(self.button_frame, text="Reset", command=self.reset, padx=5, pady=2).grid(column=1, row=0)
  
@@ -149,14 +149,14 @@ class Windows(Frame):
         self.image = PhotoImage(data=next)
         self.data_frm2 = Label(self.content,width=300,height=270,borderwidth=3,\
                 relief="ridge",padx=2,pady=2, image=self.image, bg='white')
-        self.data_frm2.pack()
+        self.data_frm2.grid(column=0, row=1)
         self.entryvalue = StringVar()
         self.data_frm3 = LabelFrame(self.content,width=0,height=0,borderwidth=3,\
                 relief="ridge",padx=2,pady=2, bg='white')
+        self.data_frm3.grid(column=0, row=0)
         self.entry = Entry(self.data_frm3,width=0, textvariable = self.entryvalue, font='10')
         self.entryvalue.set(self.text)
         self.entry.grid(column=0, row=0)
-        self.data_frm3.grid(column=0, row=0)
         self.note2.add(self.data_frm2,text="Image Output",padding=5)
         self.note2.grid(column=1,row=0,rowspan=2,padx=5,pady=5)
         self.note2.add(self.data_frm3,text="Text Output",padding=5)
@@ -171,16 +171,9 @@ class Windows(Frame):
         '''for reset button'''
         self.label_username_input.delete(0, END)
         self.label_frame_input.delete(0, END)
-        self.ls_widgets2 = [self.note2, self.data_frm2, self.data_frm3, self.entry, self.option_frame, self.button_frame]
-         #self.option_frame, self.b_submit, self.b_reset]
-        for child in self.ls_widgets2:
-            child.grid_forget()
-        print 'Reset'
-
-        # root = Tk()
-        # windows = Windows(root)
-        # mainConnect = Connect()
-        # windows.mainloop()        
+        self.ls_widgets2 = [self.note2, self.data_frm2, self.data_frm3, self.option_frame, self.button_frame, self.entry]
+        for wid in self.ls_widgets2:
+            wid.grid_remove() 
 
 class Connect(object):
     """Connecting the API libary"""
@@ -249,4 +242,3 @@ root = Tk()
 windows = Windows(root)
 mainConnect = Connect()
 windows.mainloop()
-
