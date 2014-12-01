@@ -134,7 +134,7 @@ class Windows(Frame):
             self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
             self.row += 1
         self.b_submit = Button(self.button_frame, text="Select Output", command=self.submit, padx=5, pady=2).grid(column=0, row=0)
-        self.b_reset = Button(self.button_frame, text="Reset", command=reset, padx=5, pady=2).grid(column=1, row=0)
+        self.b_reset = Button(self.button_frame, text="Reset", command=self.reset, padx=5, pady=2).grid(column=1, row=0)
  
     def widgets_output2(self, url, text):
         '''To Generate the Content for the Picture Frame'''
@@ -166,6 +166,23 @@ class Windows(Frame):
         #LOGO
         canvas = Canvas(self.content,width=300,height=80,background="Black" )
         canvas.grid(row=0, column=1)
+
+    def reset(self):
+        '''for reset button'''
+        self.label_username_input.delete(0, END)
+        self.label_frame_input.delete(0, END)
+        self.ls_widgets2 = [self.note2, self.data_frm2, self.data_frm3, self.entry, self.option_frame, self.button_frame]
+         #self.option_frame, self.b_submit, self.b_reset]
+        for child in self.ls_widgets2:
+            child.grid_forget()
+        print 'Reset'
+
+        # root = Tk()
+        # windows = Windows(root)
+        # mainConnect = Connect()
+        # windows.mainloop()
+
+        
 
 class Connect(object):
     """Connecting the API libary"""
@@ -207,6 +224,7 @@ class Connect(object):
                         print "img.src: " + src
                         print "img.alt: " + alt
                         ls_src = map(str, ls_src)
+                        break
                         #ls_alt = map(str, ls_alt)
                 print "\n"
         print 'ls_pod', ls_pod
@@ -218,21 +236,29 @@ class Connect(object):
             return ls_pod
 
 
-def reset():
-    '''for reset button'''
-    print 'Reset'
+
 
 def saveimage():
     pass   
 
 
+<<<<<<< HEAD
 def popup_about():
     messagebox.showinfo(title="About",message="Test")
     return
+=======
+def run_program():
+    pass
+>>>>>>> origin/master
 
 root = Tk()
 windows = Windows(root)
 mainConnect = Connect()
 windows.mainloop()
+<<<<<<< HEAD
 #print 'End'
 windows.mainloop()
+=======
+
+#print 'End'
+>>>>>>> origin/master
