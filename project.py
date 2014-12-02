@@ -201,7 +201,6 @@ def popup_about():
     top = Toplevel()
     top.title("About AllCulator")
     top.geometry("280x380")
-    Label(text="one").pack()
     f = Frame(top, width=280,height=70,bg="lightgreen")
     f.grid(column=0,row=0,rowspan=1,padx=0,pady=0)
     
@@ -210,13 +209,29 @@ def popup_about():
     msg.config(width=280, bg="lightgreen", font=('tahoma', 14, 'bold'))
     msg.place(x=35, y=15) 
 
-    about_message2 = 'Build With WolframAlpha'
+    about_message2 = 'The Mighty of Calculater for everything'
     msg2 = Message(top, text=about_message2)
     msg2.config(width=280, bg="lightgreen", font=('tahoma', 10))
-    msg2.place(x=95, y=40)
+    msg2.place(x=20, y=40)
+
+    about_message3 = 'Amita Mongkhonpreedarchai'
+    msg3 = Message(top, text=about_message3)
+    msg3.config(width=280)
+    msg3.place(x=5, y=80)
+
+    about_message4 = 'Nathawut Worakijlawan'
+    msg3 = Message(top, text=about_message4)
+    msg3.config(width=280)
+    msg3.place(x=5, y=100)
+
+    about_message5 = 'Spacial Thank : WolframAlpha'
+    msg3 = Message(top, text=about_message5)
+    msg3.config(width=280)
+    msg3.place(x=100, y=320)
+
 
     button = Button(top, text="Close!", command=top.destroy)
-    button.place(x=125, y=350)
+    button.place(x=120, y=350)
     top.resizable(width=FALSE, height=FALSE)
  
 
