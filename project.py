@@ -179,29 +179,8 @@ class Windows(Frame):
         for wid in self.ls_widgets:
             wid.grid_remove() 
 
-        #self.radiobutton()
-        input = self.text_input.get()
-        print 'equation', input
-        self.pod = mainConnect.call_api(self.text_input.get(), 'pod')
-
-        self.output_tp = []
-        count = 0
-        for name in self.pod:
-            self.output_tp.append((name,count))
-            count += 1
-
-        self.v = IntVar()
-        self.v.set("Input") # initialize
-        self.row = 0
-
-        for text, val_output in self.output_tp:
-            self.radio = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output)
-            self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
-            self.row += 1
-
-        self.ls_widgets2 = [self.option_frame]
-        for wid2 in self.ls_widgets2:
-            wid2.grid()
+        self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
+        self.option_frame.grid(row=9, column=0, padx=5, pady=5)
 
 class Connect(object):
     """Connecting the API libary"""
@@ -253,8 +232,6 @@ class Connect(object):
             return ls_alt
         elif gett == 'pod':
             return ls_pod
-
-
 
 
 def saveimage():
