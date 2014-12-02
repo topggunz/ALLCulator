@@ -98,9 +98,7 @@ class Windows(Frame):
         self.label_frame_input = Entry(self.frame_input, width=59, textvariable = self.text_input)
         self.label_frame_input.grid(row=2, column=0)
         
-        #checkbutton for output
-        self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
-        self.option_frame.grid(row=9, column=0, padx=5, pady=5)
+        
 
         #button
         self.button_frame0 = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
@@ -115,6 +113,9 @@ class Windows(Frame):
         # # pack.current(0)
         # # pack.pack()
     def radiobutton(self):
+        #checkbutton for output
+        self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
+        self.option_frame.grid(row=9, column=0, padx=5, pady=5)
         input = self.text_input.get()
         print 'equation', input
         self.pod = mainConnect.call_api(self.text_input.get(), 'pod') 
@@ -178,9 +179,6 @@ class Windows(Frame):
         self.ls_widgets = [self.note2, self.data_frm2, self.data_frm3, self.option_frame, self.button_frame]
         for wid in self.ls_widgets:
             wid.grid_remove() 
-
-        self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
-        self.option_frame.grid(row=9, column=0, padx=5, pady=5)
 
 class Connect(object):
     """Connecting the API libary"""
