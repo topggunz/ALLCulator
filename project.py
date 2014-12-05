@@ -21,8 +21,60 @@ try:
 except:
     msg = tkMessageBox.showerror('Error!', 'You must install PIL')
 
+
+
+
+class Connect(object):
+    """Connecting the API libary"""
+    def __init__(self):
+        '''Check internet connection'''
+        self.ls_src=[]
+        self.ls_alt=[]
+        self.ls_pod=[]
+        try:
+            self.server = urllib2.urlopen('http://www.google.com')
+        except:
+            self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
+       
+    def call_api(self, val):
+        '''call API from Wolfram Alpha and return output'''
+        server = 'http://api.wolframalpha.com/v2/query.jsp'
+        appid = '6LA36U-7V45PGUA6E'
+        input = val
+        waeo = wap.WolframAlphaEngine(appid, server)
+        queryStr = waeo.CreateQuery(val)
+        wap.WolframAlphaQuery(queryStr, appid)
+        result = waeo.PerformQuery(queryStr)
+        result = wap.WolframAlphaQueryResult(result)
+        self.ls_src=[]
+        self.ls_alt=[]
+        self.ls_pod=[]
+
+        for pod in result.Pods():
+                waPod = wap.Pod(pod)
+                title = "Pod.title: " + waPod.Title()[0]
+                self.ls_pod.append(waPod.Title()[0])
+                for subpod in waPod.Subpods():
+                        waSubpod = wap.Subpod(subpod)
+                        plaintext = waSubpod.Plaintext()[0]
+                        img = waSubpod.Img()
+                        src = wap.scanbranches(img[0], 'src')[0]
+                        alt = wap.scanbranches(img[0], 'alt')[0]
+                        self.ls_src.append(src)
+                        self.ls_alt.append(alt)
+                        print "-------------"
+                        print "img.src: " + src
+                        print "img.alt: " + alt
+                        self.ls_src = map(str, self.ls_src)
+                        break
+                print "\n"
+        return self.ls_pod
+
+
 class Windows(Frame):
     '''Create Main Windows'''
+    global conn
+    conn = Connect()
     def __init__(self, master=None):
         Frame.__init__(self, master)
         #menu bar
@@ -75,8 +127,8 @@ class Windows(Frame):
     def select_output(self):
         '''get input and show output'''
         index = self.v.get()
-        self.URL2 = mainConnect.call_api(self.text_input.get(), 'src')[index]
-        self.text = mainConnect.call_api(self.text_input.get(), 'alt')[index]
+        self.URL2 = conn.ls_src[index]
+        self.text = conn.ls_alt[index]
         if len(self.storage) != 0:
             self.ls_widgets = [self.note2, self.data_frm2, self.data_frm3]
             for wid in self.ls_widgets:
@@ -91,7 +143,7 @@ class Windows(Frame):
         #generate from API
         input = self.text_input.get()
         print 'equation', input
-        self.pod = Connect().call_api(self.text_input.get(), 'pod') 
+        self.pod = conn.call_api(self.text_input.get()) 
         self.output_tp = []
         count = 0
         for name in self.pod:
@@ -151,54 +203,6 @@ class Windows(Frame):
         for wid in self.ls_widgets:
             wid.grid_remove()
 
-
-class Connect(object):
-    """Connecting the API libary"""
-    def __init__(self):
-        '''Check internet connection'''
-        try:
-            self.server = urllib2.urlopen('http://www.google.com')
-        except:
-            self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
-       
-    def call_api(self, val, gett):
-        '''call API from Wolfram Alpha and return output'''
-        server = 'http://api.wolframalpha.com/v2/query.jsp'
-        appid = '6LA36U-7V45PGUA6E'
-        input = val
-        waeo = wap.WolframAlphaEngine(appid, server)
-        queryStr = waeo.CreateQuery(val)
-        wap.WolframAlphaQuery(queryStr, appid)
-        result = waeo.PerformQuery(queryStr)
-        result = wap.WolframAlphaQueryResult(result)
-        ls_alt, ls_src, ls_pod = [], [], []
-        for pod in result.Pods():
-                waPod = wap.Pod(pod)
-                title = "Pod.title: " + waPod.Title()[0]
-                ls_pod.append(waPod.Title()[0])
-                for subpod in waPod.Subpods():
-                        waSubpod = wap.Subpod(subpod)
-                        plaintext = waSubpod.Plaintext()[0]
-                        img = waSubpod.Img()
-                        src = wap.scanbranches(img[0], 'src')[0]
-                        alt = wap.scanbranches(img[0], 'alt')[0]
-                        ls_src.append(src)
-                        ls_alt.append(alt)
-                        print "-------------"
-                        print "img.src: " + src
-                        print "img.alt: " + alt
-                        ls_src = map(str, ls_src)
-                        break
-                print "\n"
-
-        if gett == 'src':
-            return ls_src
-        elif gett == 'alt':
-            return ls_alt
-        elif gett == 'pod':
-            return ls_pod
-
-
 def popup_about():
     '''Creat Popup About'''
     top = Toplevel()
@@ -243,5 +247,4 @@ def saveimage():
 
 root = Tk()
 windows = Windows(root)
-mainConnect = Connect()
 windows.mainloop()
