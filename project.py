@@ -1,10 +1,9 @@
-import ttk
 """Project PSIT Startup at 11/11/2557
 Author :    Nathawut Worakijlawan 
             Amita Mongkhonpreedarchai
 """
-import io
-import base64
+import urllib,  urllib2, wap, tkMessageBox, ttk, io, base64
+
 try:
     # Python2
     from Tkinter import *
@@ -15,12 +14,6 @@ except ImportError:
     from tkinter import *
     import tkinter as tk
     from urllib.request import urlopen
-import urllib
-import urllib2
-import wap
-import tkMessageBox
-import ttk
-
 
 try:
     from PIL import Image, ImageTk
@@ -79,35 +72,23 @@ class Connect(object):
 
 
 class Windows(Frame):
-<<<<<<< HEAD
-=======
     '''Create Main Windows'''
     global conn
     conn = Connect()
->>>>>>> d74235add5e99e62541d8ab25907ef4558268606
     def __init__(self, master=None):
         Frame.__init__(self, master)
         #menu bar
-        self.master.title("AllCulator beta")
-        #self.master.geometry("550x550")
         self.master.title("AllCulator (build 1)")
         self.menubar = Menu(self, tearoff=False)
         self.optionmenu = Menu(self.menubar, tearoff=0)
         self.filemenu = Menu(self.menubar, tearoff=0)
-        self.filemenu.add_command(label='Save Image...', command=saveimage)
+        self.filemenu.add_command(label='Save As...', command=saveimage)
         self.filemenu.add_command(label='Exit', command=quit)
         self.helpmenu = Menu(self.menubar, tearoff=0)
         self.helpmenu.add_command(label="About", command=popup_about)
-
         self.menubar.add_cascade(menu=self.filemenu, label="File")
-        #self.menubar.add_cascade(menu=self.optionmenu, label="Options")
         self.menubar.add_cascade(menu=self.helpmenu, label="Help")
         self.master.config(menu=self.menubar)
-        self.pack()
-
-        #Frame input
-        self.content = Frame(master ,width=300,height=400,borderwidth=2,relief="groove")
-        self.content.pack()
         self.grid(column=0, row=0)
         #content
         self.content = Frame(master, borderwidth=2, relief="groove")
@@ -121,35 +102,6 @@ class Windows(Frame):
                 relief="ridge",padx=2,pady=2)
         self.data_frm1.grid(column=0, row=0)
         self.note.add(self.data_frm1,text="Input Area",padding=5)
-        self.note.grid(column=0,row=0,rowspan=2,padx=5,pady=5)
-        self.widgets_input()
-        self.widgets_output()
-
-    def test_show(self):
-        self.URL = Connect().src
-        self.link = urllib.urlopen(self.URL)
-        self.raw_data = self.link.read()
-        self.link.close()
-        next = base64.encodestring(self.raw_data)
-        self.image = PhotoImage(data=next)  
-                
-    def cb_var(self):
-        '''for get value to radiobutton'''
-        print 'variable', self.v.get()
-        index = self.v.get()
-        return index
-
-    def submit(self):
-        '''get input'''   
-        self.URL2 = mainConnect.call_api(self.text_input.get(), 'src')[self.cb_var()]
-        self.text = mainConnect.call_api(self.text_input.get(), 'alt')[self.cb_var()]
-        print 'URL2', self.URL2
-        print 'text', self.text
-        print 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-        self.widgets_output2(self.URL2, self.text)
-
-    def widgets_input(self):
-        #label for username
         self.note.grid(column=0, row=0, rowspan=2, padx=5, pady=5)
         #-label for username
         self.username_input = StringVar()
@@ -162,17 +114,6 @@ class Windows(Frame):
         self.frame_input = ttk.LabelFrame(self.data_frm1, text='Enter what you want to calculate', padding=5)
         self.frame_input.grid(column=0, row=1, padx=10, pady=10)
         self.label_frame_input = Entry(self.frame_input, width=59, textvariable = self.text_input)
-        self.label_frame_input.grid(row=2, column=0)
-        
-        #checkbutton for output
-        self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
-        self.option_frame.grid(row=9, column=0, padx=5, pady=5)
-
-        #button
-        self.button_frame0 = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
-        self.button_frame0.grid(row=8, column=0, padx=5, pady=5)
-        self.b_genradio = Button(self.button_frame0, text="Submit", command=self.radiobutton, padx=5, pady=2).grid(column=0, row=0)
-        
         self.label_frame_input.grid(column=0, row=0)
         #-button
         self.button_frame0 = Frame(self.data_frm1, bd=1, relief=SUNKEN)
@@ -194,17 +135,7 @@ class Windows(Frame):
                 wid.grid_remove()
         self.widgets_output(self.URL2, self.text)
 
-        # #####combobox test
-        # # Label(master,text="Package:").pack(padx=2,pady=2)
-        # # package=StringVar()
-        # # pack=ttk.Combobox(master,width=10,state="readonly",values=['SIP','DIP','CONN-Dual','QUAD'],textvariable=package)
-        # # pack.current(0)
-        # # pack.pack()
     def radiobutton(self):
-        input = self.text_input.get()
-        print 'equation', input
-        self.pod = mainConnect.call_api(self.text_input.get(), 'pod') 
-
         '''Creat Radiobutton , SelectOutput Button and Reset Button'''
         if 'radio' in self.storage:
             self.ls_widgets1 = [self.option_frame, self.button_frame]
@@ -241,7 +172,7 @@ class Windows(Frame):
         self.b_reset.grid(column=1, row=0)
         self.storage.append('radio')
  
-    def widgets_output2(self, url, text):
+    def widgets_output(self, url, text):
         '''To Generate the Content for the Picture Frame'''
         #Frame output'''
         self.note2 = ttk.Notebook(self.content, padding=2)
@@ -268,105 +199,12 @@ class Windows(Frame):
         self.note2.add(self.data_frm3,text="Text Output",padding=5)
         self.note2.grid(column=1,row=1,rowspan=2,padx=5,pady=5)
 
-    def widgets_output(self):
-        #LOGO
-        canvas = Canvas(self.content,width=300,height=80,background="Black" )
-        canvas.grid(row=0, column=1)
         self.storage.append('widgets')
 
-
     def reset(self):
-        '''for reset button'''
+        '''clear all of Entry and remove widgets output'''
         self.label_username_input.delete(0, END)
         self.label_frame_input.delete(0, END)
-<<<<<<< HEAD
-
-        self.ls_widgets = [self.note2, self.data_frm2, self.data_frm3, self.option_frame, self.button_frame]
-        for wid in self.ls_widgets:
-            wid.grid_remove() 
-
-        #self.radiobutton()
-        input = self.text_input.get()
-        print 'equation', input
-        self.pod = mainConnect.call_api(self.text_input.get(), 'pod')
-
-        self.output_tp = []
-        count = 0
-        for name in self.pod:
-            self.output_tp.append((name,count))
-            count += 1
-
-        self.v = IntVar()
-        self.v.set("Input") # initialize
-        self.row = 0
-
-        for text, val_output in self.output_tp:
-            self.radio = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output)
-            self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
-            self.row += 1
-
-        self.ls_widgets2 = [self.option_frame]
-        for wid2 in self.ls_widgets2:
-            wid2.grid()
-
-class Connect(object):
-    """Connecting the API libary"""
-    def __init__(self):
-        try:
-            self.server = urllib2.urlopen('http://www.google.com')
-            print 'Hello'
-        except:
-            self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
-       
-    def call_api(self, val, gett):
-        server = 'http://api.wolframalpha.com/v2/query.jsp'
-        appid = '6LA36U-7V45PGUA6E'
-        input = val
-        waeo = wap.WolframAlphaEngine(appid, server)
-        queryStr = waeo.CreateQuery(val)
-        wap.WolframAlphaQuery(queryStr, appid)
-        result = waeo.PerformQuery(queryStr)
-        result = wap.WolframAlphaQueryResult(result)
-        # 'result.Pods()', result.Pods()
-        ls_alt, ls_src, ls_pod = [], [], []
-        print ls_pod
-
-        for pod in result.Pods():
-                waPod = wap.Pod(pod)
-                title = "Pod.title: " + waPod.Title()[0]
-                print title
-                #print ls_pod
-                ls_pod.append(waPod.Title()[0])
-                for subpod in waPod.Subpods():
-                        waSubpod = wap.Subpod(subpod)
-                        plaintext = waSubpod.Plaintext()[0]
-                        img = waSubpod.Img()
-                        src = wap.scanbranches(img[0], 'src')[0]
-                        alt = wap.scanbranches(img[0], 'alt')[0]
-                        ls_src.append(src)
-                        ls_alt.append(alt)
-                        print "-------------"
-                        print "img.src: " + src
-                        print "img.alt: " + alt
-                        ls_src = map(str, ls_src)
-                        break
-                        #ls_alt = map(str, ls_alt)
-                print "\n"
-        print 'ls_pod', ls_pod
-        if gett == 'src':
-            return ls_src
-        elif gett == 'alt':
-            return ls_alt
-        elif gett == 'pod':
-            return ls_pod
-
-
-
-
-def saveimage():
-    pass   
-
-=======
         self.ls_widgets2 = [self.option_frame, self.button_frame]
         self.ls_widgets3 = []
         if 'widgets' in self.storage:
@@ -376,8 +214,8 @@ def saveimage():
         for wid in self.ls_widgets2:
             wid.grid_remove()
 
->>>>>>> d74235add5e99e62541d8ab25907ef4558268606
 def popup_about():
+    '''Creat Popup About'''
     top = Toplevel()
     top.title("About AllCulator")
     top.geometry("280x380")
@@ -389,7 +227,7 @@ def popup_about():
     msg.config(width=280, bg="lightgreen", font=('tahoma', 14, 'bold'))
     msg.place(x=35, y=15) 
 
-    about_message2 = 'The Mighty of Calculater for everything.'
+    about_message2 = 'The Mighty of Calculater for everything'
     msg2 = Message(top, text=about_message2)
     msg2.config(width=280, bg="lightgreen", font=('tahoma', 10))
     msg2.place(x=20, y=40)
@@ -397,25 +235,24 @@ def popup_about():
     about_message3 = 'Amita Mongkhonpreedarchai'
     msg3 = Message(top, text=about_message3)
     msg3.config(width=280)
-    msg3.place(x=5, y=150)
+    msg3.place(x=5, y=80)
 
     about_message4 = 'Nathawut Worakijlawan'
     msg3 = Message(top, text=about_message4)
     msg3.config(width=280)
-    msg3.place(x=5, y=170)
+    msg3.place(x=5, y=100)
 
-    about_message5 = 'Thank you Wolfram|Alpha for all result calculated.'
+    about_message5 = 'Spacial Thank : WolframAlpha'
     msg3 = Message(top, text=about_message5)
     msg3.config(width=280)
-    msg3.place(x=2, y=310)
+    msg3.place(x=100, y=320)
 
 
     button = Button(top, text="Close!", command=top.destroy)
     button.place(x=120, y=350)
     top.resizable(width=FALSE, height=FALSE)
+ 
 
-def run_program():
-    pass
 def saveimage():
     pass
 
