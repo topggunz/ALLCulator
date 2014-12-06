@@ -129,14 +129,19 @@ class Windows(Frame):
         index = self.v.get()
         self.URL2 = conn.ls_src[index]
         self.text = conn.ls_alt[index]
-        if len(self.storage) != 0:
-            self.ls_widgets = [self.note2, self.data_frm2, self.data_frm3]
-            for wid in self.ls_widgets:
+        if 'widgets' in self.storage:
+            self.ls_widgets0 = [self.note2, self.data_frm2, self.data_frm3]
+            for wid in self.ls_widgets0:
                 wid.grid_remove()
         self.widgets_output(self.URL2, self.text)
 
     def radiobutton(self):
         '''Creat Radiobutton , SelectOutput Button and Reset Button'''
+        if 'radio' in self.storage:
+            self.ls_widgets1 = [self.option_frame, self.button_frame]
+            for wid in self.ls_widgets1:
+                wid.grid_remove()
+
         #checkbutton for output
         self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
         self.option_frame.grid(column=0, row=3, padx=5, pady=5)
@@ -165,6 +170,7 @@ class Windows(Frame):
         self.b_select_output.grid(column=0, row=0)
         self.b_reset = Button(self.button_frame, text="Reset", command=self.reset, padx=5, pady=2)
         self.b_reset.grid(column=1, row=0)
+        self.storage.append('radio')
  
     def widgets_output(self, url, text):
         '''To Generate the Content for the Picture Frame'''
@@ -199,8 +205,13 @@ class Windows(Frame):
         '''clear all of Entry and remove widgets output'''
         self.label_username_input.delete(0, END)
         self.label_frame_input.delete(0, END)
-        self.ls_widgets = [self.note2, self.data_frm2, self.data_frm3, self.option_frame, self.button_frame]
-        for wid in self.ls_widgets:
+        self.ls_widgets2 = [self.option_frame, self.button_frame]
+        self.ls_widgets3 = []
+        if 'widgets' in self.storage:
+            self.ls_widgets3 = [self.note2, self.data_frm2, self.data_frm3]
+        for i in self.ls_widgets3:
+            self.ls_widgets2.append(i)
+        for wid in self.ls_widgets2:
             wid.grid_remove()
 
 def popup_about():
