@@ -28,7 +28,63 @@ try:
 except:
     msg = tkMessageBox.showerror('Error!', 'You must install PIL')
 
+
+
+
+class Connect(object):
+    """Connecting the API libary"""
+    def __init__(self):
+        '''Check internet connection'''
+        self.ls_src=[]
+        self.ls_alt=[]
+        self.ls_pod=[]
+        try:
+            self.server = urllib2.urlopen('http://www.google.com')
+        except:
+            self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
+       
+    def call_api(self, val):
+        '''call API from Wolfram Alpha and return output'''
+        server = 'http://api.wolframalpha.com/v2/query.jsp'
+        appid = '6LA36U-7V45PGUA6E'
+        input = val
+        waeo = wap.WolframAlphaEngine(appid, server)
+        queryStr = waeo.CreateQuery(val)
+        wap.WolframAlphaQuery(queryStr, appid)
+        result = waeo.PerformQuery(queryStr)
+        result = wap.WolframAlphaQueryResult(result)
+        self.ls_src=[]
+        self.ls_alt=[]
+        self.ls_pod=[]
+
+        for pod in result.Pods():
+                waPod = wap.Pod(pod)
+                title = "Pod.title: " + waPod.Title()[0]
+                self.ls_pod.append(waPod.Title()[0])
+                for subpod in waPod.Subpods():
+                        waSubpod = wap.Subpod(subpod)
+                        plaintext = waSubpod.Plaintext()[0]
+                        img = waSubpod.Img()
+                        src = wap.scanbranches(img[0], 'src')[0]
+                        alt = wap.scanbranches(img[0], 'alt')[0]
+                        self.ls_src.append(src)
+                        self.ls_alt.append(alt)
+                        print "-------------"
+                        print "img.src: " + src
+                        print "img.alt: " + alt
+                        self.ls_src = map(str, self.ls_src)
+                        break
+                print "\n"
+        return self.ls_pod
+
+
 class Windows(Frame):
+<<<<<<< HEAD
+=======
+    '''Create Main Windows'''
+    global conn
+    conn = Connect()
+>>>>>>> d74235add5e99e62541d8ab25907ef4558268606
     def __init__(self, master=None):
         Frame.__init__(self, master)
         #menu bar
@@ -130,11 +186,11 @@ class Windows(Frame):
     def select_output(self):
         '''get input and show output'''
         index = self.v.get()
-        self.URL2 = mainConnect.call_api(self.text_input.get(), 'src')[index]
-        self.text = mainConnect.call_api(self.text_input.get(), 'alt')[index]
-        if len(self.storage) != 0:
-            self.ls_widgets = [self.note2, self.data_frm2, self.data_frm3]
-            for wid in self.ls_widgets:
+        self.URL2 = conn.ls_src[index]
+        self.text = conn.ls_alt[index]
+        if 'widgets' in self.storage:
+            self.ls_widgets0 = [self.note2, self.data_frm2, self.data_frm3]
+            for wid in self.ls_widgets0:
                 wid.grid_remove()
         self.widgets_output(self.URL2, self.text)
 
@@ -150,13 +206,18 @@ class Windows(Frame):
         self.pod = mainConnect.call_api(self.text_input.get(), 'pod') 
 
         '''Creat Radiobutton , SelectOutput Button and Reset Button'''
+        if 'radio' in self.storage:
+            self.ls_widgets1 = [self.option_frame, self.button_frame]
+            for wid in self.ls_widgets1:
+                wid.grid_remove()
+
         #checkbutton for output
         self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
         self.option_frame.grid(column=0, row=3, padx=5, pady=5)
         #generate from API
         input = self.text_input.get()
         print 'equation', input
-        self.pod = Connect().call_api(self.text_input.get(), 'pod') 
+        self.pod = conn.call_api(self.text_input.get()) 
         self.output_tp = []
         count = 0
         for name in self.pod:
@@ -178,6 +239,7 @@ class Windows(Frame):
         self.b_select_output.grid(column=0, row=0)
         self.b_reset = Button(self.button_frame, text="Reset", command=self.reset, padx=5, pady=2)
         self.b_reset.grid(column=1, row=0)
+        self.storage.append('radio')
  
     def widgets_output2(self, url, text):
         '''To Generate the Content for the Picture Frame'''
@@ -217,6 +279,7 @@ class Windows(Frame):
         '''for reset button'''
         self.label_username_input.delete(0, END)
         self.label_frame_input.delete(0, END)
+<<<<<<< HEAD
 
         self.ls_widgets = [self.note2, self.data_frm2, self.data_frm3, self.option_frame, self.button_frame]
         for wid in self.ls_widgets:
@@ -303,6 +366,17 @@ class Connect(object):
 def saveimage():
     pass   
 
+=======
+        self.ls_widgets2 = [self.option_frame, self.button_frame]
+        self.ls_widgets3 = []
+        if 'widgets' in self.storage:
+            self.ls_widgets3 = [self.note2, self.data_frm2, self.data_frm3]
+        for i in self.ls_widgets3:
+            self.ls_widgets2.append(i)
+        for wid in self.ls_widgets2:
+            wid.grid_remove()
+
+>>>>>>> d74235add5e99e62541d8ab25907ef4558268606
 def popup_about():
     top = Toplevel()
     top.title("About AllCulator")
@@ -347,5 +421,4 @@ def saveimage():
 
 root = Tk()
 windows = Windows(root)
-mainConnect = Connect()
 windows.mainloop()
