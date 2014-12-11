@@ -82,6 +82,7 @@ class Windows(Frame):
         self.menubar = Menu(self, tearoff=False)
         self.optionmenu = Menu(self.menubar, tearoff=0)
         self.filemenu = Menu(self.menubar, tearoff=0)
+        self.filemenu.add_command(label='History', command=history)
         self.filemenu.add_command(label='Save As...', command=saveimage)
         self.filemenu.add_command(label='Exit', command=quit)
         self.helpmenu = Menu(self.menubar, tearoff=0)
@@ -121,6 +122,7 @@ class Windows(Frame):
         self.b_genradio = Button(self.button_frame0, text="Submit", padx=5, pady=2, command=self.radiobutton)# 
         self.b_genradio.grid(column=0, row=0)
         
+        self.dic_hist = {}
         self.storage = []
 
 
@@ -146,11 +148,28 @@ class Windows(Frame):
         self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
         self.option_frame.grid(column=0, row=3, padx=5, pady=5)
         #generate from API
+        input = self.username_input.get()
+        print 'username', input
+        self.user = input
+        print self.user
+
+
         input = self.text_input.get()
         print 'equation', input
-        if input == '':
+        self.equa = input
+        print self.equa
+
+        if self.equa == '':
             tkMessageBox.showerror('Error','Please Enter Input')
         else:
+            if self.user not in self.dic_hist:
+                self.ls_equa = []
+                self.ls_equa.append(self.equa)
+                self.dic_hist[self.user] = self.ls_equa
+            else:
+                self.dic_hist[self.user].append(self.equa)
+            print 'dic_hist', self.dic_hist
+
             self.pod = conn.call_api(self.text_input.get()) 
             self.output_tp = []
             count = 0
@@ -258,7 +277,8 @@ def popup_about():
 
 def saveimage():
     pass
-
+def history():
+    pass
 root = Tk()
 windows = Windows(root)
 windows.mainloop()
