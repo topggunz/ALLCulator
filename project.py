@@ -28,9 +28,9 @@ class Connect(object):
     """Connecting the API libary"""
     def __init__(self):
         '''Check internet connection'''
-        self.ls_src=[]
-        self.ls_alt=[]
-        self.ls_pod=[]
+        self.ls_src = []
+        self.ls_alt = []
+        self.ls_pod = []
         try:
             self.server = urllib2.urlopen('http://www.google.com')
         except:
@@ -46,9 +46,9 @@ class Connect(object):
         wap.WolframAlphaQuery(queryStr, appid)
         result = waeo.PerformQuery(queryStr)
         result = wap.WolframAlphaQueryResult(result)
-        self.ls_src=[]
-        self.ls_alt=[]
-        self.ls_pod=[]
+        self.ls_src = []
+        self.ls_alt = []
+        self.ls_pod = []
 
         for pod in result.Pods():
                 waPod = wap.Pod(pod)
@@ -82,7 +82,7 @@ class Windows(Frame):
         self.menubar = Menu(self, tearoff=False)
         self.optionmenu = Menu(self.menubar, tearoff=0)
         self.filemenu = Menu(self.menubar, tearoff=0)
-        self.filemenu.add_command(label='History', command=history)
+        self.filemenu.add_command(label='History', command=self.history)
         self.filemenu.add_command(label='Save As...', command=saveimage)
         self.filemenu.add_command(label='Exit', command=quit)
         self.helpmenu = Menu(self.menubar, tearoff=0)
@@ -119,12 +119,13 @@ class Windows(Frame):
         #-button
         self.button_frame0 = Frame(self.data_frm1, bd=1, relief=SUNKEN)
         self.button_frame0.grid(column=0, row=2, padx=5, pady=5)
-        self.b_genradio = Button(self.button_frame0, text="Submit", padx=5, pady=2, command=self.radiobutton)# 
+        self.b_genradio = Button(self.button_frame0, text="Submit", padx=5, pady=2, command=self.radiobutton) 
         self.b_genradio.grid(column=0, row=0)
         
         self.dic_hist = {}
         self.storage = []
 
+        print self.dic_hist
 
     def select_output(self):
         '''get input and show output'''
@@ -147,21 +148,19 @@ class Windows(Frame):
         #checkbutton for output
         self.option_frame = ttk.Labelframe(self.data_frm1, text='Select Output', padding=5)
         self.option_frame.grid(column=0, row=3, padx=5, pady=5)
-        #generate from API
+        
         input = self.username_input.get()
         print 'username', input
         self.user = input
-        print self.user
-
 
         input = self.text_input.get()
         print 'equation', input
         self.equa = input
-        print self.equa
 
         if self.equa == '':
             tkMessageBox.showerror('Error','Please Enter Input')
         else:
+            #Add History in dict
             if self.user not in self.dic_hist:
                 self.ls_equa = []
                 self.ls_equa.append(self.equa)
@@ -170,6 +169,7 @@ class Windows(Frame):
                 self.dic_hist[self.user].append(self.equa)
             print 'dic_hist', self.dic_hist
 
+            #generate from API
             self.pod = conn.call_api(self.text_input.get()) 
             self.output_tp = []
             count = 0
@@ -236,12 +236,31 @@ class Windows(Frame):
         for wid in self.ls_widgets2:
             wid.grid_remove()
 
+    def history(self):
+        '''Generate History from dict Show on History in filemenu'''
+        self.top_his = Toplevel()
+        self.top_his.title("History")
+        #self.top_his.geometry("280x380")
+        self.f_his = Frame(self.top_his, bg="lightgreen")
+        self.f_his.grid(column=0, row=1, rowspan=1, padx=0, pady=0)
+
+        self.his_msg = 'History' 
+        self.msg = Message(self.f_his, text=self.his_msg, bg="lightgreen", font=('tahoma', 10, 'bold'))
+        self.msg.place(x=5, y=5)
+        self.msg.grid(column=0, row=0) 
+
+        self.v_ent = StringVar()
+        #print self.dic_hist
+        self.entry_his = Entry(self.f_his, state="readonly", textvariable=self.v_ent)
+        self.v_ent.set(self.dic_hist)
+        self.entry_his.grid(column=0, row=1,  padx=5, pady=5)
+
 def popup_about():
     '''Creat Popup About'''
-    top = Toplevel()
-    top.title("About AllCulator")
-    top.geometry("280x380")
-    f = Frame(top, width=280,height=70,bg="lightgreen")
+    top_abt = Toplevel()
+    top_abt.title("About AllCulator")
+    top_abt.geometry("280x380")
+    f = Frame(top_abt, width=280,height=70,bg="lightgreen")
     f.grid(column=0,row=0,rowspan=1,padx=0,pady=0)
     
     about_message = ' +:+ AllCulator +:+ ' 
@@ -250,35 +269,37 @@ def popup_about():
     msg.place(x=35, y=15) 
 
     about_message2 = 'The Mighty of Calculater for everything'
-    msg2 = Message(top, text=about_message2)
+    msg2 = Message(top_abt, text=about_message2)
     msg2.config(width=280, bg="lightgreen", font=('tahoma', 10))
     msg2.place(x=20, y=40)
 
     about_message3 = 'Amita Mongkhonpreedarchai'
-    msg3 = Message(top, text=about_message3)
+    msg3 = Message(top_abt, text=about_message3)
     msg3.config(width=280)
     msg3.place(x=5, y=80)
 
     about_message4 = 'Nathawut Worakijlawan'
-    msg3 = Message(top, text=about_message4)
+    msg3 = Message(top_abt, text=about_message4)
     msg3.config(width=280)
     msg3.place(x=5, y=100)
 
     about_message5 = 'Spacial Thank : WolframAlpha'
-    msg3 = Message(top, text=about_message5)
+    msg3 = Message(top_abt, text=about_message5)
     msg3.config(width=280)
     msg3.place(x=100, y=320)
 
 
-    button = Button(top, text="Close!", command=top.destroy)
+    button = Button(top_abt, text="Close!", command=top_abt.destroy)
     button.place(x=120, y=350)
-    top.resizable(width=FALSE, height=FALSE)
+    top_abt.resizable(width=FALSE, height=FALSE)
  
 
 def saveimage():
     pass
-def history():
-    pass
+
+def gendic():
+    print 'aaa'
+
 root = Tk()
 windows = Windows(root)
 windows.mainloop()
