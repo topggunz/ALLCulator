@@ -240,9 +240,9 @@ class Windows(Frame):
         '''Generate History from dict Show on History in filemenu'''
         self.top_his = Toplevel()
         self.top_his.title("History")
-        #self.top_his.geometry("280x380")
+        # self.top_his.geometry("280x380")
         self.f_his = Frame(self.top_his, bg="lightgreen")
-        self.f_his.grid(column=0, row=1, rowspan=1, padx=0, pady=0)
+        self.f_his.grid(column=0, row=0, padx=0, pady=0)
 
         self.his_msg = 'History' 
         self.msg = Message(self.f_his, text=self.his_msg, bg="lightgreen", font=('tahoma', 10, 'bold'))
@@ -254,6 +254,19 @@ class Windows(Frame):
         self.entry_his = Entry(self.f_his, state="readonly", textvariable=self.v_ent)
         self.v_ent.set(self.dic_hist)
         self.entry_his.grid(column=0, row=1,  padx=5, pady=5)
+
+        self.listbox = Listbox(self.f_his)
+        self.listbox.grid(column=0, row=2)
+        self.listbox.insert(END)
+
+        for user in self.dic_hist:
+            self.listbox.insert(END, user)
+            # self.listbox.insert(END, '')
+            for equa in self.dic_hist[user]:
+                self.listbox.insert(END, equa)
+            self.listbox.insert(END, '')
+
+
 
 def popup_about():
     '''Creat Popup About'''
@@ -296,6 +309,11 @@ def popup_about():
 
 def saveimage():
     pass
+
+
+
+
+
 
 def gendic():
     print 'aaa'
