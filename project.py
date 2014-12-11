@@ -148,29 +148,32 @@ class Windows(Frame):
         #generate from API
         input = self.text_input.get()
         print 'equation', input
-        self.pod = conn.call_api(self.text_input.get()) 
-        self.output_tp = []
-        count = 0
-        for name in self.pod:
-            self.output_tp.append((name,count))
-            count += 1
+        if input == '':
+            tkMessageBox.showerror('Error','Please Enter Input')
+        else:
+            self.pod = conn.call_api(self.text_input.get()) 
+            self.output_tp = []
+            count = 0
+            for name in self.pod:
+                self.output_tp.append((name,count))
+                count += 1
 
-        self.v = IntVar()
-        self.v.set("Input") # initialize
-        self.row = 0
+            self.v = IntVar()
+            self.v.set("Input") # initialize
+            self.row = 0
 
-        for text, val_output in self.output_tp:
-            self.radio = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output)
-            self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
-            self.row += 1
+            for text, val_output in self.output_tp:
+                self.radio = Radiobutton(self.option_frame, text=text, variable=self.v, value=val_output)
+                self.radio.grid(row=self.row, column=0, padx=10, sticky=W)
+                self.row += 1
 
-        self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
-        self.button_frame.grid(column=0, row=5, padx=5, pady=5)
-        self.b_select_output = Button(self.button_frame, text="Select Output", command=self.select_output, padx=5, pady=2)
-        self.b_select_output.grid(column=0, row=0)
-        self.b_reset = Button(self.button_frame, text="Reset", command=self.reset, padx=5, pady=2)
-        self.b_reset.grid(column=1, row=0)
-        self.storage.append('radio')
+            self.button_frame = Frame(self.data_frm1, height=2, bd=1, relief=SUNKEN)
+            self.button_frame.grid(column=0, row=5, padx=5, pady=5)
+            self.b_select_output = Button(self.button_frame, text="Select Output", command=self.select_output, padx=5, pady=2)
+            self.b_select_output.grid(column=0, row=0)
+            self.b_reset = Button(self.button_frame, text="Reset", command=self.reset, padx=5, pady=2)
+            self.b_reset.grid(column=1, row=0)
+            self.storage.append('radio')
  
     def widgets_output(self, url, text):
         '''To Generate the Content for the Picture Frame'''
