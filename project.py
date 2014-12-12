@@ -3,18 +3,10 @@ Author :    Nathawut Worakijlawan
             Amita Mongkhonpreedarchai
 """
 import urllib,  urllib2, wap, tkMessageBox, ttk, io, base64
-
-try:
-    # Python2
-    from Tkinter import *
-    import Tkinter as tk
-    from urllib2 import urlopen
-except ImportError:
-    # Python3
-    from tkinter import *
-    import tkinter as tk
-    from urllib.request import urlopen
-
+# Python2
+from Tkinter import *
+import Tkinter as tk
+from urllib2 import urlopen
 try:
     from PIL import Image, ImageTk
     print 'Done'
@@ -82,7 +74,7 @@ class Windows(Frame):
         self.menubar = Menu(self, tearoff=False)
         self.optionmenu = Menu(self.menubar, tearoff=0)
         self.filemenu = Menu(self.menubar, tearoff=0)
-        self.filemenu.add_command(label='Save As...', command=saveimage)
+        self.filemenu.add_command(label='Save Image', command=saveimage)
         self.filemenu.add_command(label='Exit', command=quit)
         self.helpmenu = Menu(self.menubar, tearoff=0)
         self.helpmenu.add_command(label="About", command=popup_about)
@@ -218,38 +210,43 @@ def popup_about():
     '''Creat Popup About'''
     top = Toplevel()
     top.title("About AllCulator")
-    top.geometry("280x380")
-    f = Frame(top, width=280,height=70,bg="lightgreen")
+    top.geometry("350x380")
+    f = Frame(top, width=350,height=95,bg="lightgreen")
     f.grid(column=0,row=0,rowspan=1,padx=0,pady=0)
     
-    about_message = ' +:+ AllCulator +:+ ' 
+    about_message = 'AllCulator' 
     msg = Message(f, text=about_message)
-    msg.config(width=280, bg="lightgreen", font=('tahoma', 14, 'bold'))
-    msg.place(x=35, y=15) 
+    msg.config(width=280, bg="lightgreen", font=('tahoma', 16, 'bold'))
+    msg.place(x=0, y=45) 
 
-    about_message2 = 'The Mighty of Calculater for everything'
+    about_message2 = '\"The Mighty of Calculater for everything\"'
     msg2 = Message(top, text=about_message2)
     msg2.config(width=280, bg="lightgreen", font=('tahoma', 10))
-    msg2.place(x=20, y=40)
+    msg2.place(x=0, y=70)
 
     about_message3 = 'Amita Mongkhonpreedarchai'
     msg3 = Message(top, text=about_message3)
     msg3.config(width=280)
-    msg3.place(x=5, y=80)
+    msg3.place(x=5, y=150)
 
     about_message4 = 'Nathawut Worakijlawan'
     msg3 = Message(top, text=about_message4)
     msg3.config(width=280)
-    msg3.place(x=5, y=100)
+    msg3.place(x=5, y=170)
 
-    about_message5 = 'Spacial Thank : WolframAlpha'
+    about_message4 = 'King Mongkut\'s Institute of Technology Ladkrabang'
+    msg3 = Message(top, text=about_message4)
+    msg3.config(width=280)
+    msg3.place(x=5, y=110)
+
+    about_message5 = 'Spacial Thank : Wolfram|Alpha'
     msg3 = Message(top, text=about_message5)
     msg3.config(width=280)
-    msg3.place(x=100, y=320)
+    msg3.place(x=160, y=310)
 
 
-    button = Button(top, text="Close!", command=top.destroy)
-    button.place(x=120, y=350)
+    button = Button(top, text="  Close!  ", command=top.destroy)
+    button.place(x=150, y=340)
     top.resizable(width=FALSE, height=FALSE)
  
 
