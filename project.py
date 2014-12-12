@@ -20,6 +20,7 @@ try:
     print 'Done'
 except:
     msg = tkMessageBox.showerror('Error!', 'You must install PIL')
+    exit(1)
 
 class Connect(object):
     """Connecting the API libary"""
@@ -32,7 +33,7 @@ class Connect(object):
             self.server = urllib2.urlopen('http://www.google.com')
         except:
             self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
-            return       
+            exit(1)
 
     def call_api(self, val):
         '''call API from Wolfram Alpha and return output'''
@@ -81,8 +82,8 @@ class Windows(Frame):
         self.optionmenu = Menu(self.menubar, tearoff=0)
         self.filemenu = Menu(self.menubar, tearoff=0)
         self.filemenu.add_command(label='History', command=self.history)
-        self.filemenu.add_command(label='Save As...', command=saveimage)
-        self.filemenu.add_command(label='Exit', command=quit)
+        self.filemenu.add_command(label='Save Image', command=self.saveimage)
+        # self.filemenu.add_command(label='Exit', command=quit)
         self.helpmenu = Menu(self.menubar, tearoff=0)
         self.helpmenu.add_command(label="About", command=popup_about)
         self.menubar.add_cascade(menu=self.filemenu, label="File")
@@ -122,6 +123,7 @@ class Windows(Frame):
         
         self.dic_hist = {}
         self.storage = []
+        self.round_save = 1
 
         print self.dic_hist
 
@@ -220,6 +222,7 @@ class Windows(Frame):
         self.note2.grid(column=1,row=1,rowspan=2,padx=5,pady=5)
 
         self.storage.append('widgets')
+        print 'pic', self.URL
 
     def reset(self):
         '''clear all of Entry and remove widgets output'''
@@ -233,6 +236,13 @@ class Windows(Frame):
             self.ls_widgets2.append(i)
         for wid in self.ls_widgets2:
             wid.grid_remove()
+    
+    def saveimage(self):
+        self.testfile = urllib.URLopener()
+        self.testfile.retrieve(self.URL, self.equa+'_'+str('%03d'%self.round_save)+'.gif')
+        self.round_save += 1
+
+
 
     def history(self):
         '''Generate History from dict Show on History in filemenu'''
@@ -299,10 +309,6 @@ def popup_about():
     button.place(x=120, y=350)
     top_abt.resizable(width=FALSE, height=FALSE)
  
-
-def saveimage():
-    pass
-
 
 root = Tk()
 windows = Windows(root)
