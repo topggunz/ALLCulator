@@ -21,9 +21,6 @@ try:
 except:
     msg = tkMessageBox.showerror('Error!', 'You must install PIL')
 
-
-
-
 class Connect(object):
     """Connecting the API libary"""
     def __init__(self):
@@ -35,7 +32,8 @@ class Connect(object):
             self.server = urllib2.urlopen('http://www.google.com')
         except:
             self.msg = tkMessageBox.showerror('Error!', 'Can\'t connect to Server.')
-       
+            return       
+
     def call_api(self, val):
         '''call API from Wolfram Alpha and return output'''
         server = 'http://api.wolframalpha.com/v2/query.jsp'
@@ -106,9 +104,9 @@ class Windows(Frame):
         self.note.grid(column=0, row=0, rowspan=2, padx=5, pady=5)
         #-label for username
         self.username_input = StringVar()
-        self.frame_username = ttk.LabelFrame(self.data_frm1, text='USER NAME',padding=5)
+        self.frame_username = ttk.LabelFrame(self.data_frm1, text='NAME',padding=5)
         self.frame_username.grid(column=0, row=0, padx=10, pady=10, sticky=N+W)      
-        self.label_username_input = Entry(self.frame_username, width=20, textvariable = self.username_input)
+        self.label_username_input = Entry(self.frame_username, width=29, textvariable = self.username_input)
         self.label_username_input.grid(column=0, row=0, sticky=N+W)
         #-label for input
         self.text_input = StringVar()
@@ -247,15 +245,9 @@ class Windows(Frame):
         self.his_msg = 'History' 
         self.msg = Message(self.f_his, text=self.his_msg, bg="lightgreen", font=('tahoma', 10, 'bold'))
         self.msg.place(x=5, y=5)
-        self.msg.grid(column=0, row=0) 
+        self.msg.grid(column=0, row=0)
 
-        self.v_ent = StringVar()
-        #print self.dic_hist
-        self.entry_his = Entry(self.f_his, state="readonly", textvariable=self.v_ent)
-        self.v_ent.set(self.dic_hist)
-        self.entry_his.grid(column=0, row=1,  padx=5, pady=5)
-
-        self.listbox = Listbox(self.f_his)
+        self.listbox = Listbox(self.f_his, font=('tahoma', 10), width=40, height=20, selectmode=EXTENDED)
         self.listbox.grid(column=0, row=2)
         self.listbox.insert(END)
 
@@ -267,6 +259,7 @@ class Windows(Frame):
             self.listbox.insert(END, '')
 
 
+        self.top_his.resizable(width=FALSE, height=FALSE)
 
 def popup_about():
     '''Creat Popup About'''
@@ -310,13 +303,6 @@ def popup_about():
 def saveimage():
     pass
 
-
-
-
-
-
-def gendic():
-    print 'aaa'
 
 root = Tk()
 windows = Windows(root)
