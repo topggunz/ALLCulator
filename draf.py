@@ -107,7 +107,7 @@ class Windows(Frame):
         self.note.grid(column=0, row=0, rowspan=2, padx=5, pady=5)
         #-label for username
         self.username_input = StringVar()
-        self.frame_username = ttk.LabelFrame(self.data_frm1, text='NAME',padding=5)
+        self.frame_username = ttk.LabelFrame(self.data_frm1, text='NAME', padding=5)
         self.frame_username.grid(column=0, row=0, padx=10, pady=10, sticky=N+W)      
         self.label_username_input = Entry(self.frame_username, width=29, textvariable = self.username_input)
         self.label_username_input.grid(column=0, row=0, sticky=N+W)

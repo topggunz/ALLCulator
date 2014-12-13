@@ -69,18 +69,14 @@ class Windows(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
         #menu bar
-        self.master.title("AllCulator (build 1)")
+        self.master.title("AllCulator")
         self.menubar = Menu(self, tearoff=False)
         self.optionmenu = Menu(self.menubar, tearoff=0)
         self.filemenu = Menu(self.menubar, tearoff=0)
-<<<<<<< HEAD
-        self.filemenu.add_command(label='Save Image', command=saveimage)
-        self.filemenu.add_command(label='Exit', command=quit)
-=======
+        self.filemenu.add_command(label='Save Image...', command=self.saveimage)
+        #self.filemenu.add_command(label='Exit', command=quit)
         self.filemenu.add_command(label='History', command=self.history)
-        self.filemenu.add_command(label='Save Image', command=self.saveimage)
-        # self.filemenu.add_command(label='Exit', command=quit)
->>>>>>> origin/master
+        self.filemenu.add_command(label='Exit', command=quit)
         self.helpmenu = Menu(self.menubar, tearoff=0)
         self.helpmenu.add_command(label="About", command=popup_about)
         self.menubar.add_cascade(menu=self.filemenu, label="File")
@@ -91,7 +87,9 @@ class Windows(Frame):
         self.content = Frame(master, borderwidth=2, relief="groove")
         self.content.grid(column=0, row=0)
         #LOGO
-        canvas = Canvas(self.content,width=300,height=80,background="Black" )
+        self.gif1 = PhotoImage(file = 'logo.gif')
+        canvas = Canvas(self.content,width=300,height=128)
+        canvas.create_image(150, 10, image = self.gif1, anchor = N)
         canvas.grid(column=1, row=0, padx=10)
         #Input Area
         self.note = ttk.Notebook(self.content,padding=2)
@@ -246,11 +244,11 @@ class Windows(Frame):
         self.top_his = Toplevel()
         self.top_his.title("History")
         # self.top_his.geometry("280x380")
-        self.f_his = Frame(self.top_his, bg="lightgreen")
+        self.f_his = Frame(self.top_his, bg="lightblue")
         self.f_his.grid(column=0, row=0, padx=0, pady=0)
 
         self.his_msg = 'History' 
-        self.msg = Message(self.f_his, text=self.his_msg, bg="lightgreen", font=('tahoma', 10, 'bold'))
+        self.msg = Message(self.f_his, text=self.his_msg, bg="lightblue", font=('tahoma', 10, 'bold'))
         self.msg.place(x=5, y=5)
         self.msg.grid(column=0, row=0)
 
@@ -270,17 +268,10 @@ class Windows(Frame):
 
 def popup_about():
     '''Creat Popup About'''
-<<<<<<< HEAD
     top = Toplevel()
     top.title("About AllCulator")
     top.geometry("350x380")
     f = Frame(top, width=350,height=95,bg="lightgreen")
-=======
-    top_abt = Toplevel()
-    top_abt.title("About AllCulator")
-    top_abt.geometry("280x380")
-    f = Frame(top_abt, width=280,height=70,bg="lightgreen")
->>>>>>> origin/master
     f.grid(column=0,row=0,rowspan=1,padx=0,pady=0)
     
     about_message = 'AllCulator' 
@@ -288,23 +279,18 @@ def popup_about():
     msg.config(width=280, bg="lightgreen", font=('tahoma', 16, 'bold'))
     msg.place(x=0, y=45) 
 
-<<<<<<< HEAD
     about_message2 = '\"The Mighty of Calculater for everything\"'
     msg2 = Message(top, text=about_message2)
-=======
-    about_message2 = 'The Mighty of Calculater for everything'
-    msg2 = Message(top_abt, text=about_message2)
->>>>>>> origin/master
     msg2.config(width=280, bg="lightgreen", font=('tahoma', 10))
     msg2.place(x=0, y=70)
 
     about_message3 = 'Amita Mongkhonpreedarchai'
-    msg3 = Message(top_abt, text=about_message3)
+    msg3 = Message(top, text=about_message3)
     msg3.config(width=280)
     msg3.place(x=5, y=150)
 
     about_message4 = 'Nathawut Worakijlawan'
-    msg3 = Message(top_abt, text=about_message4)
+    msg3 = Message(top, text=about_message4)
     msg3.config(width=280)
     msg3.place(x=5, y=170)
 
@@ -313,28 +299,18 @@ def popup_about():
     msg3.config(width=280)
     msg3.place(x=5, y=110)
 
-<<<<<<< HEAD
     about_message5 = 'Spacial Thank : Wolfram|Alpha'
     msg3 = Message(top, text=about_message5)
-=======
-    about_message5 = 'Spacial Thank : WolframAlpha'
-    msg3 = Message(top_abt, text=about_message5)
->>>>>>> origin/master
     msg3.config(width=280)
     msg3.place(x=160, y=310)
 
-
-<<<<<<< HEAD
     button = Button(top, text="  Close!  ", command=top.destroy)
     button.place(x=150, y=340)
     top.resizable(width=FALSE, height=FALSE)
-=======
-    button = Button(top_abt, text="Close!", command=top_abt.destroy)
-    button.place(x=120, y=350)
-    top_abt.resizable(width=FALSE, height=FALSE)
->>>>>>> origin/master
+
  
 
 root = Tk()
+root.iconbitmap('logo.ico')
 windows = Windows(root)
 windows.mainloop()
