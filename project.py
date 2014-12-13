@@ -314,7 +314,6 @@ def popup_about():
     button = Button(top, text="  Close!  ", command=top.destroy)
     button.place(x=150, y=340)
     top.resizable(width=FALSE, height=FALSE)
-    top.iconbitmap('logo.ico')
 
  
 
