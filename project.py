@@ -87,8 +87,8 @@ class Windows(Frame):
         self.content = Frame(master, borderwidth=2, relief="groove")
         self.content.grid(column=0, row=0)
         #LOGO
-        self.gif1 = PhotoImage(file = 'logo.gif')
-        canvas = Canvas(self.content,width=300,height=128)
+        self.gif1 = PhotoImage(file = 'logo3.gif')
+        canvas = Canvas(self.content,width=300,height=80)
         canvas.create_image(150, 0, image = self.gif1, anchor = N)
         canvas.grid(column=1, row=0, padx=10)
         #Input Area
@@ -243,6 +243,7 @@ class Windows(Frame):
         '''Generate History from dict Show on History in filemenu'''
         self.top_his = Toplevel()
         self.top_his.title("History")
+        self.top_his.iconbitmap('icon2.ico')
         # self.top_his.geometry("280x380")
         self.f_his = Frame(self.top_his, bg="lightblue")
         self.f_his.grid(column=0, row=0, padx=0, pady=0)
@@ -271,17 +272,23 @@ def popup_about():
     top = Toplevel()
     top.title("About AllCulator")
     top.geometry("350x380")
-    f = Frame(top, width=350,height=95,bg="lightgreen")
+    top.iconbitmap('icon2.ico')
+    f = Frame(top, width=350,height=95,bg="lightblue")
     f.grid(column=0,row=0,rowspan=1,padx=0,pady=0)
     
+    gif2 = PhotoImage(file = 'iicon.gif')
+    canvas = Canvas(top,width=100,height=100)
+    canvas.create_image(150, 0, image = gif2, anchor = N)
+    canvas.place(x=20, y=100)
+
     about_message = 'AllCulator' 
     msg = Message(f, text=about_message)
-    msg.config(width=280, bg="lightgreen", font=('tahoma', 16, 'bold'))
+    msg.config(width=280, bg="lightblue", font=('tahoma', 16, 'bold'))
     msg.place(x=0, y=45) 
 
     about_message2 = '\"The Mighty of Calculater for everything\"'
     msg2 = Message(top, text=about_message2)
-    msg2.config(width=280, bg="lightgreen", font=('tahoma', 10))
+    msg2.config(width=280, bg="lightblue", font=('tahoma', 10))
     msg2.place(x=0, y=70)
 
     about_message3 = 'Amita Mongkhonpreedarchai'
@@ -311,6 +318,6 @@ def popup_about():
  
 
 root = Tk()
-root.iconbitmap('logo.ico')
+root.iconbitmap('icon2.ico')
 windows = Windows(root)
 windows.mainloop()
