@@ -234,7 +234,7 @@ class Windows(Frame):
     
     def saveimage(self):
         self.testfile = urllib.URLopener()
-        self.testfile.retrieve(self.URL, self.equa+'_'+str('%03d'%self.round_save)+'.gif')
+        self.testfile.retrieve(self.URL, str('%03d'%self.round_save)+'.gif')
         self.round_save += 1
 
 

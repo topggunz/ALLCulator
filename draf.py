@@ -5,17 +5,10 @@ Author :    Nathawut Worakijlawan
 import urllib,  urllib2, wap, tkMessageBox, ttk, io, base64
 import Tkinter as tki
 
-try:
-    # Python2
-    from Tkinter import *
-    import Tkinter as tk
-    from urllib2 import urlopen
-except ImportError:
-    # Python3
-    from tkinter import *
-    import tkinter as tk
-    from urllib.request import urlopen
-
+# Python2
+from Tkinter import *
+import Tkinter as tk
+from urllib2 import urlopen
 try:
     from PIL import Image, ImageTk
     print 'Done'
@@ -78,13 +71,14 @@ class Windows(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
         #menu bar
-        self.master.title("AllCulator (build 1)")
+        self.master.title("AllCulator")
         self.menubar = Menu(self, tearoff=False)
         self.optionmenu = Menu(self.menubar, tearoff=0)
         self.filemenu = Menu(self.menubar, tearoff=0)
+        self.filemenu.add_command(label='Save Image...', command=self.saveimage)
+        #self.filemenu.add_command(label='Exit', command=quit)
         self.filemenu.add_command(label='History', command=self.history)
-        self.filemenu.add_command(label='Save Image', command=self.saveimage)
-        # self.filemenu.add_command(label='Exit', command=quit)
+        self.filemenu.add_command(label='Exit', command=quit)
         self.helpmenu = Menu(self.menubar, tearoff=0)
         self.helpmenu.add_command(label="About", command=popup_about)
         self.menubar.add_cascade(menu=self.filemenu, label="File")
@@ -92,22 +86,23 @@ class Windows(Frame):
         self.master.config(menu=self.menubar)
         self.grid(column=0, row=0)
         #content
-        self.content = Frame(master, borderwidth=2, relief="groove", bg='#272822')
+        self.content = Frame(master, borderwidth=2, relief="groove", bg='#fbfdcc')
         self.content.grid(column=0, row=0)
         #LOGO
-        canvas = Canvas(self.content,width=300,height=80,background="Black" )
+        self.gif1 = PhotoImage(file = 'logo.gif')
+        canvas = Canvas(self.content,width=300,height=128)
+        canvas.create_image(150, 10, image = self.gif1, anchor = N)
         canvas.grid(column=1, row=0, padx=10)
         #Input Area
         self.note = ttk.Notebook(self.content,padding=2)
-
         self.data_frm1 = Frame(self.content,width=300,height=400,borderwidth=3,\
-                relief="ridge",padx=2,pady=2, bg='#272822')
+                relief="ridge",padx=2,pady=2)
         self.data_frm1.grid(column=0, row=0)
         self.note.add(self.data_frm1,text="Input Area",padding=5)
         self.note.grid(column=0, row=0, rowspan=2, padx=5, pady=5)
         #-label for username
         self.username_input = StringVar()
-        self.frame_username = ttk.LabelFrame(self.data_frm1, text='NAME', padding=5)
+        self.frame_username = ttk.LabelFrame(self.data_frm1, text='NAME',padding=5)
         self.frame_username.grid(column=0, row=0, padx=10, pady=10, sticky=N+W)      
         self.label_username_input = Entry(self.frame_username, width=29, textvariable = self.username_input)
         self.label_username_input.grid(column=0, row=0, sticky=N+W)
@@ -118,20 +113,20 @@ class Windows(Frame):
         self.label_frame_input = Entry(self.frame_input, width=59, textvariable = self.text_input)
         self.label_frame_input.grid(column=0, row=0)
         #-button
-        self.button_frame0 = Frame(self.data_frm1, bd=1, relief=SUNKEN, bg='#272822')
+        self.button_frame0 = Frame(self.data_frm1, bd=1, relief=SUNKEN)
         self.button_frame0.grid(column=0, row=2, padx=5, pady=5)
         self.b_genradio = Button(self.button_frame0, text="Submit", padx=5, pady=2, command=self.radiobutton) 
         self.b_genradio.grid(column=0, row=0)
         
-        #ttk style change configure
-        ttk.Style().configure("TNotebook", background='#272822', foreground='#272822')
-        ttk.Style().configure("TLabelframe", background='#272822', foreground='#272822')
-
         self.dic_hist = {}
         self.storage = []
         self.round_save = 1
 
         print self.dic_hist
+
+        #ttk style change configure
+        ttk.Style().configure("TNotebook", background='#fbfdcc', foreground='#fbfdcc')
+        #ttk.Style().configure("TLabelframe", background='#fbfdcc', foreground='#fbfdcc')
 
     def select_output(self):
         '''get input and show output'''
@@ -255,11 +250,11 @@ class Windows(Frame):
         self.top_his = Toplevel()
         self.top_his.title("History")
         # self.top_his.geometry("280x380")
-        self.f_his = Frame(self.top_his, bg="lightgreen")
+        self.f_his = Frame(self.top_his, bg="lightblue")
         self.f_his.grid(column=0, row=0, padx=0, pady=0)
 
         self.his_msg = 'History' 
-        self.msg = Message(self.f_his, text=self.his_msg, bg="lightgreen", font=('tahoma', 10, 'bold'))
+        self.msg = Message(self.f_his, text=self.his_msg, bg="lightblue", font=('tahoma', 10, 'bold'))
         self.msg.place(x=5, y=5)
         self.msg.grid(column=0, row=0)
 
@@ -279,43 +274,49 @@ class Windows(Frame):
 
 def popup_about():
     '''Creat Popup About'''
-    top_abt = Toplevel()
-    top_abt.title("About AllCulator")
-    top_abt.geometry("280x380")
-    f = Frame(top_abt, width=280,height=70,bg="lightgreen")
+    top = Toplevel()
+    top.title("About AllCulator")
+    top.geometry("350x380")
+    f = Frame(top, width=350,height=95,bg="lightgreen")
     f.grid(column=0,row=0,rowspan=1,padx=0,pady=0)
     
-    about_message = ' +:+ AllCulator +:+ ' 
+    about_message = 'AllCulator' 
     msg = Message(f, text=about_message)
-    msg.config(width=280, bg="lightgreen", font=('tahoma', 14, 'bold'))
-    msg.place(x=35, y=15) 
+    msg.config(width=280, bg="lightgreen", font=('tahoma', 16, 'bold'))
+    msg.place(x=0, y=45) 
 
-    about_message2 = 'The Mighty of Calculater for everything'
-    msg2 = Message(top_abt, text=about_message2)
+    about_message2 = '\"The Mighty of Calculater for everything\"'
+    msg2 = Message(top, text=about_message2)
     msg2.config(width=280, bg="lightgreen", font=('tahoma', 10))
-    msg2.place(x=20, y=40)
+    msg2.place(x=0, y=70)
 
     about_message3 = 'Amita Mongkhonpreedarchai'
-    msg3 = Message(top_abt, text=about_message3)
+    msg3 = Message(top, text=about_message3)
     msg3.config(width=280)
-    msg3.place(x=5, y=80)
+    msg3.place(x=5, y=150)
 
     about_message4 = 'Nathawut Worakijlawan'
-    msg3 = Message(top_abt, text=about_message4)
+    msg3 = Message(top, text=about_message4)
     msg3.config(width=280)
-    msg3.place(x=5, y=100)
+    msg3.place(x=5, y=170)
 
-    about_message5 = 'Spacial Thank : WolframAlpha'
-    msg3 = Message(top_abt, text=about_message5)
+    about_message4 = 'King Mongkut\'s Institute of Technology Ladkrabang'
+    msg3 = Message(top, text=about_message4)
     msg3.config(width=280)
-    msg3.place(x=100, y=320)
+    msg3.place(x=5, y=110)
 
+    about_message5 = 'Spacial Thank : Wolfram|Alpha'
+    msg3 = Message(top, text=about_message5)
+    msg3.config(width=280)
+    msg3.place(x=160, y=310)
 
-    button = Button(top_abt, text="Close!", command=top_abt.destroy)
-    button.place(x=120, y=350)
-    top_abt.resizable(width=FALSE, height=FALSE)
+    button = Button(top, text="  Close!  ", command=top.destroy)
+    button.place(x=150, y=340)
+    top.resizable(width=FALSE, height=FALSE)
+
  
 
 root = Tk()
+root.iconbitmap('logo.ico')
 windows = Windows(root)
 windows.mainloop()
