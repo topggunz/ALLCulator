@@ -89,7 +89,7 @@ class Windows(Frame):
         #LOGO
         self.gif1 = PhotoImage(file = 'logo.gif')
         canvas = Canvas(self.content,width=300,height=128)
-        canvas.create_image(150, 10, image = self.gif1, anchor = N)
+        canvas.create_image(150, 0, image = self.gif1, anchor = N)
         canvas.grid(column=1, row=0, padx=10)
         #Input Area
         self.note = ttk.Notebook(self.content,padding=2)
