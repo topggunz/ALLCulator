@@ -1,8 +1,8 @@
-ALLCallator
+ALLCulator
 ==============
 
 Project for PSIT
-ALLCallator Has Make Graph from your math formula. This Programs is Easy to use. 
+ALLCulator Has Make Graph from your math formula. This Programs is Easy to use. 
 
 
 Installing 
