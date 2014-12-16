@@ -271,15 +271,16 @@ def popup_about():
     '''Creat Popup About'''
     top = Toplevel()
     top.title("About AllCulator")
-    top.geometry("350x380")
+    top.geometry("300x380")
     top.iconbitmap('icon2.ico')
-    f = Frame(top, width=350,height=95,bg="lightblue")
+    f = Frame(top, width=300,height=80,bg="lightblue")
     f.grid(column=0,row=0,rowspan=1,padx=0,pady=0)
     
-    gif2 = PhotoImage(file = 'iicon.gif')
-    canvas = Canvas(top,width=100,height=100)
-    canvas.create_image(150, 0, image = gif2, anchor = N)
-    canvas.place(x=20, y=100)
+    gif2 = PhotoImage(file = 'logo3.gif')
+    canvas = Canvas(f,width=300,height=80)
+    canvas.create_image(150,0,image = PhotoImage(file = 'logo.gif'), anchor = 'nw')
+    canvas.place(x=0, y=10)
+    
 
     about_message = 'AllCulator' 
     msg = Message(f, text=about_message)
@@ -313,9 +314,9 @@ def popup_about():
 
     button = Button(top, text="  Close!  ", command=top.destroy)
     button.place(x=150, y=340)
-    top.resizable(width=FALSE, height=FALSE)
+    #top.resizable(width=FALSE, height=FALSE)
 
- 
+ #TESTGIT
 
 root = Tk()
 root.iconbitmap('icon2.ico')
