@@ -9,7 +9,7 @@ import Tkinter as tk
 from urllib2 import urlopen
 try:
     from PIL import Image, ImageTk
-    print 'Done'
+    #print 'Done'
 except:
     msg = tkMessageBox.showerror('Error!', 'You must install PIL')
     exit(1)
@@ -53,12 +53,12 @@ class Connect(object):
                         alt = wap.scanbranches(img[0], 'alt')[0]
                         self.ls_src.append(src)
                         self.ls_alt.append(alt)
-                        print "-------------"
-                        print "img.src: " + src
-                        print "img.alt: " + alt
+                        #print "-------------"
+                        #print "img.src: " + src
+                        #print "img.alt: " + alt
                         self.ls_src = map(str, self.ls_src)
                         break
-                print "\n"
+                #print "\n"
         return self.ls_pod
 
 
@@ -120,7 +120,7 @@ class Windows(Frame):
         self.storage = []
         self.round_save = 1
 
-        print self.dic_hist
+        #prin self.dic_hist
 
     def select_output(self):
         '''get input and show output'''
@@ -145,11 +145,11 @@ class Windows(Frame):
         self.option_frame.grid(column=0, row=3, padx=5, pady=5)
         
         input = self.username_input.get()
-        print 'username', input
+        #print 'username', input
         self.user = input
 
         input = self.text_input.get()
-        print 'equation', input
+        #print 'equation', input
         self.equa = input
 
         if self.equa == '':
@@ -162,7 +162,7 @@ class Windows(Frame):
                 self.dic_hist[self.user] = self.ls_equa
             else:
                 self.dic_hist[self.user].append(self.equa)
-            print 'dic_hist', self.dic_hist
+            #print 'dic_hist', self.dic_hist
 
             #generate from API
             self.pod = conn.call_api(self.text_input.get()) 
@@ -217,7 +217,7 @@ class Windows(Frame):
         self.note2.grid(column=1,row=1,rowspan=2,padx=5,pady=5)
 
         self.storage.append('widgets')
-        print 'pic', self.URL
+        #print 'pic', self.URL
 
     def reset(self):
         '''clear all of Entry and remove widgets output'''
@@ -244,7 +244,6 @@ class Windows(Frame):
         self.top_his = Toplevel()
         self.top_his.title("History")
         self.top_his.iconbitmap('icon2.ico')
-        # self.top_his.geometry("280x380")
         self.f_his = Frame(self.top_his, bg="lightblue")
         self.f_his.grid(column=0, row=0, padx=0, pady=0)
 
@@ -259,7 +258,6 @@ class Windows(Frame):
 
         for user in self.dic_hist:
             self.listbox.insert(END, user)
-            # self.listbox.insert(END, '')
             for equa in self.dic_hist[user]:
                 self.listbox.insert(END, equa)
             self.listbox.insert(END, '')
@@ -273,13 +271,8 @@ def popup_about():
     top.title("About AllCulator")
     top.geometry("300x380")
     top.iconbitmap('icon2.ico')
-    f = Frame(top, width=300,height=80,bg="lightblue")
+    f = Frame(top, width=300,height=100,bg="lightblue")
     f.grid(column=0,row=0,rowspan=1,padx=0,pady=0)
-    
-    gif2 = PhotoImage(file = 'logo3.gif')
-    canvas = Canvas(f,width=300,height=80)
-    canvas.create_image(150,0,image = PhotoImage(file = 'logo.gif'), anchor = 'nw')
-    canvas.place(x=0, y=10)
     
 
     about_message = 'AllCulator' 
@@ -310,13 +303,11 @@ def popup_about():
     about_message5 = 'Spacial Thank : Wolfram|Alpha'
     msg3 = Message(top, text=about_message5)
     msg3.config(width=280)
-    msg3.place(x=160, y=310)
+    msg3.place(x=110, y=310)
 
     button = Button(top, text="  Close!  ", command=top.destroy)
-    button.place(x=150, y=340)
-    #top.resizable(width=FALSE, height=FALSE)
-
- #TESTGIT
+    button.place(x=120, y=340)
+    top.resizable(width=FALSE, height=FALSE)
 
 root = Tk()
 root.iconbitmap('icon2.ico')
