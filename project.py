@@ -37,13 +37,11 @@ class Connect(object):
         wap.WolframAlphaQuery(queryStr, appid)
         result = waeo.PerformQuery(queryStr)
         result = wap.WolframAlphaQueryResult(result)
-        self.ls_src = []
-        self.ls_alt = []
-        self.ls_pod = []
 
         for pod in result.Pods():
                 waPod = wap.Pod(pod)
                 title = "Pod.title: " + waPod.Title()[0]
+                print title
                 self.ls_pod.append(waPod.Title()[0])
                 for subpod in waPod.Subpods():
                         waSubpod = wap.Subpod(subpod)
@@ -53,12 +51,12 @@ class Connect(object):
                         alt = wap.scanbranches(img[0], 'alt')[0]
                         self.ls_src.append(src)
                         self.ls_alt.append(alt)
-                        #print "-------------"
-                        #print "img.src: " + src
-                        #print "img.alt: " + alt
+                        print "-------------"
+                        print "img.src: " + src
+                        print "img.alt: " + alt
                         self.ls_src = map(str, self.ls_src)
                         break
-                #print "\n"
+                print "\n"
         return self.ls_pod
 
 
@@ -237,8 +235,6 @@ class Windows(Frame):
         self.testfile.retrieve(self.URL, str('%03d'%self.round_save)+'.gif')
         self.round_save += 1
 
-
-
     def history(self):
         '''Generate History from dict Show on History in filemenu'''
         self.top_his = Toplevel()
@@ -262,8 +258,8 @@ class Windows(Frame):
                 self.listbox.insert(END, equa)
             self.listbox.insert(END, '')
 
-
         self.top_his.resizable(width=FALSE, height=FALSE)
+
 
 def popup_about():
     '''Creat Popup About'''
