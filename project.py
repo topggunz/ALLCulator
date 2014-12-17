@@ -9,7 +9,6 @@ import Tkinter as tk
 from urllib2 import urlopen
 try:
     from PIL import Image, ImageTk
-    #print 'Done'
 except:
     msg = tkMessageBox.showerror('Error!', 'You must install PIL')
     exit(1)
@@ -41,7 +40,6 @@ class Connect(object):
         for pod in result.Pods():
                 waPod = wap.Pod(pod)
                 title = "Pod.title: " + waPod.Title()[0]
-                print title
                 self.ls_pod.append(waPod.Title()[0])
                 for subpod in waPod.Subpods():
                         waSubpod = wap.Subpod(subpod)
@@ -51,19 +49,15 @@ class Connect(object):
                         alt = wap.scanbranches(img[0], 'alt')[0]
                         self.ls_src.append(src)
                         self.ls_alt.append(alt)
-                        print "-------------"
-                        print "img.src: " + src
-                        print "img.alt: " + alt
                         self.ls_src = map(str, self.ls_src)
                         break
-                print "\n"
         return self.ls_pod
 
 
 class Windows(Frame):
     '''Create Main Windows'''
     global conn
-    conn = Connect()
+    conn = Connect()  
     def __init__(self, master=None):
         Frame.__init__(self, master)
         #menu bar
@@ -118,7 +112,6 @@ class Windows(Frame):
         self.storage = []
         self.round_save = 1
 
-        #prin self.dic_hist
 
     def select_output(self):
         '''get input and show output'''
@@ -143,11 +136,9 @@ class Windows(Frame):
         self.option_frame.grid(column=0, row=3, padx=5, pady=5)
         
         input = self.username_input.get()
-        #print 'username', input
         self.user = input
 
         input = self.text_input.get()
-        #print 'equation', input
         self.equa = input
 
         if self.equa == '':
@@ -160,7 +151,6 @@ class Windows(Frame):
                 self.dic_hist[self.user] = self.ls_equa
             else:
                 self.dic_hist[self.user].append(self.equa)
-            #print 'dic_hist', self.dic_hist
 
             #generate from API
             self.pod = conn.call_api(self.text_input.get()) 
@@ -215,7 +205,6 @@ class Windows(Frame):
         self.note2.grid(column=1,row=1,rowspan=2,padx=5,pady=5)
 
         self.storage.append('widgets')
-        #print 'pic', self.URL
 
     def reset(self):
         '''clear all of Entry and remove widgets output'''
