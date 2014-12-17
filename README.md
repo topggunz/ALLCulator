@@ -11,7 +11,7 @@ You must install [Python Imaging Library (PIL)](http://www.pythonware.com/produc
 
 Developer
 ---------------
-Nathawut Worakijlawan ID. 57070038
-Amita Mongkhonpreedarchai ID. 57070145
-Faculty of Information Technology,
+* Nathawut Worakijlawan ID. 57070038
+* Amita Mongkhonpreedarchai ID. 57070145 <br />
+Faculty of Information Technology, <br />
 King Mongkut’s institute of technology Ladkrabang
